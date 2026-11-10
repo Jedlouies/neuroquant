@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111c">
+  <meta name="description" content="NeuroQuant product guide, operating instructions, data handling notes, policies, and clinical-use disclaimers.">
+  <title>NeuroQuant Documentation</title>
+  <style>
+    :root{color-scheme:dark;--bg:#07111c;--panel:#0c1927;--panel2:#102235;--line:#21384b;--text:#e6f0fa;--muted:#9fb3c7;--cyan:#39d6e8;--blue:#51aaff;--amber:#f7c66a;--red:#ff8a88;--green:#58d5b0;--shadow:0 20px 60px #0008;--radius:18px;font-family:Inter,"Segoe UI",Arial,sans-serif}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:radial-gradient(ellipse at 78% 0%,#12364a 0,transparent 38%),linear-gradient(145deg,#091522,#060c13 58%,#0b1724);color:var(--text);line-height:1.65}a{color:#79d8ef;text-decoration:none}a:hover{color:#c5f7ff;text-decoration:underline}button,input{font:inherit}.topbar{height:68px;position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:24px;padding:0 max(24px,calc((100vw - 1440px)/2));background:#07111ceF;border-bottom:1px solid #274158;backdrop-filter:blur(18px)}.brand{display:flex;align-items:center;gap:12px;min-width:250px;color:var(--text);font-weight:750;letter-spacing:.02em}.brand-mark{width:36px;height:36px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#1c9eb6,#1471a2);box-shadow:0 8px 24px #1689a555;font-weight:800}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.16em;text-transform:uppercase}.search{margin-left:auto;max-width:420px;width:100%;position:relative}.search input{width:100%;padding:10px 14px 10px 40px;border:1px solid #2b4359;border-radius:12px;background:#0c1927;color:var(--text);outline:none}.search input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #39d6e822}.search:before{content:"⌕";position:absolute;left:14px;top:3px;font-size:25px;color:#8faabd}.version{font-size:12px;color:#9db6ca;white-space:nowrap}.shell{max-width:1440px;margin:auto;display:grid;grid-template-columns:270px minmax(0,1fr);gap:34px;padding:32px 26px 80px}.sidebar{position:sticky;top:92px;align-self:start;max-height:calc(100vh - 112px);overflow:auto;padding:16px 12px;border:1px solid var(--line);border-radius:16px;background:#0b1825cc}.nav-label{padding:8px 12px;color:#7592aa;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.sidebar a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;color:#b5c8d9;font-size:13px}.sidebar a:hover,.sidebar a.active{background:#123449;color:#eaffff;text-decoration:none}.sidebar a.active{box-shadow:inset 2px 0 var(--cyan)}.nav-icon{width:18px;text-align:center;color:var(--cyan);font-size:14px}.content{min-width:0}.hero{position:relative;overflow:hidden;padding:44px 48px;border:1px solid #28516a;border-radius:24px;background:linear-gradient(125deg,#0d2535ee,#0b1725ee 58%,#132b3bee);box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;width:320px;height:320px;right:-50px;top:-130px;border-radius:50%;border:1px solid #55d3e733;box-shadow:0 0 0 34px #55d3e70d,0 0 0 68px #55d3e708}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.eyebrow:before{content:"";width:20px;height:1px;background:var(--cyan)}h1{font-size:clamp(34px,5vw,58px);line-height:1.05;letter-spacing:-.04em;margin:18px 0 14px;max-width:720px}.hero p{max-width:740px;color:#b8cbdc;font-size:17px}.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:25px}.button{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;background:#087e9b;color:#fff;font-weight:700;font-size:13px;border:1px solid #28b8ce}.button.secondary{background:#102236;border-color:#31516b;color:#c7e5f5}.hero-meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;color:#8ba7bb;font-size:12px}.hero-meta span:before{content:"•";color:var(--cyan);margin-right:8px}section.doc-section{padding-top:60px}.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px}.section-kicker{color:var(--cyan);font-weight:800;font-size:10px;letter-spacing:.18em;text-transform:uppercase}.section-head h2{font-size:clamp(25px,3vw,36px);line-height:1.15;letter-spacing:-.025em;margin:6px 0}.section-head p{margin:0;max-width:620px;color:var(--muted)}.grid{display:grid;gap:16px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card{padding:22px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,#0e1d2b,#0a1521);box-shadow:0 12px 35px #0002}.card h3{font-size:17px;margin:0 0 8px}.card p{margin:0;color:#adc0d0}.card .icon{width:38px;height:38px;display:grid;place-items:center;margin-bottom:15px;border:1px solid #276175;border-radius:12px;background:#0f3040;color:var(--cyan);font-size:18px}.callout{display:flex;gap:14px;padding:16px 18px;border:1px solid #3a6073;border-left:3px solid var(--cyan);border-radius:12px;background:#102333;color:#bdd1e0}.callout strong{color:#e6f7ff}.callout.warn{border-left-color:var(--amber);background:#2a2418;border-color:#6b542b}.callout.danger{border-left-color:var(--red);background:#2a191c;border-color:#674047}.callout.success{border-left-color:var(--green);background:#102621;border-color:#2e5c4d}.callout .callout-icon{font-size:19px;line-height:1.3}.steps{display:grid;gap:12px;counter-reset:step}.step{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:18px;border:1px solid var(--line);border-radius:14px;background:#0c1927}.step:before{counter-increment:step;content:counter(step,decimal-leading-zero);display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#103344;color:var(--cyan);font-weight:800;font-size:12px}.step h3{margin:0 0 5px;font-size:15px}.step p{margin:0;color:#a9bdce}.code-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}.code{white-space:pre-wrap;font:13px/1.8 "Cascadia Code",Consolas,monospace;color:#c8e3f0;background:#07111c;border:1px solid #23394c;border-radius:12px;padding:18px;overflow:auto}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}table{border-collapse:collapse;width:100%;min-width:620px;background:#0c1927}th,td{text-align:left;vertical-align:top;padding:13px 15px;border-bottom:1px solid #1e3345}th{color:#8eddea;background:#102438;font-size:11px;letter-spacing:.08em;text-transform:uppercase}td{font-size:13px;color:#b7c9d8}td strong{color:#e4f2fb}tr:last-child td{border-bottom:0}.tag{display:inline-block;padding:3px 8px;border:1px solid #2b5163;border-radius:99px;background:#0d2c3a;color:#8fe5ef;font-size:11px;white-space:nowrap}.tag.optional{border-color:#655432;background:#292317;color:#f3ce83}.tag.no{border-color:#653943;background:#2b181d;color:#ffb5ad}.toc-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.toc-link{padding:15px;border:1px solid var(--line);border-radius:12px;background:#0d1b29;color:#c0d3e2}.toc-link strong{display:block;color:#e8f5fb;font-size:13px}.toc-link span{font-size:11px;color:#8ea7ba}.accordion{border:1px solid var(--line);border-radius:14px;background:#0c1927;overflow:hidden}.accordion details+details{border-top:1px solid var(--line)}.accordion summary{padding:16px 18px;cursor:pointer;font-weight:700;list-style:none}.accordion summary:after{content:"＋";float:right;color:var(--cyan)}.accordion details[open] summary:after{content:"−"}.accordion details>div{padding:0 18px 18px;color:#aebfd0}.accordion p{margin:0}.footer{margin-top:70px;padding:26px 0;border-top:1px solid #1e3345;color:#7f98ab;font-size:12px}.footer-grid{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.footer strong{color:#c9dce9}.small{font-size:12px;color:#91a9bb}.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.pill{padding:6px 10px;border:1px solid #304b60;border-radius:99px;color:#a9c2d4;font-size:11px}.hide{display:none!important}.no-results{display:none;margin-top:20px;padding:20px;border:1px dashed #42637a;border-radius:14px;color:#b5cad9}.no-results.show{display:block}
+    @media(max-width:980px){.shell{grid-template-columns:1fr;padding:20px}.sidebar{position:relative;top:auto;max-height:none;display:flex;gap:4px;overflow:auto;padding:8px}.sidebar .nav-label{display:none}.sidebar a{white-space:nowrap}.grid.three{grid-template-columns:repeat(2,minmax(0,1fr))}.brand{min-width:auto}.version{display:none}}
+    @media(max-width:640px){.topbar{height:auto;min-height:62px;flex-wrap:wrap;gap:10px;padding:12px 16px}.brand{flex:1}.search{order:3;max-width:none}.shell{padding:14px}.hero{padding:30px 24px}.grid.two,.grid.three,.code-layout,.toc-row{grid-template-columns:1fr}.section-head{display:block}.section-head p{margin-top:8px}.hero p{font-size:15px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="NeuroQuant Documentation home"><span class="brand-mark">NQ</span><span>NeuroQuant<small>Documentation center</small></span></a>
+    <div class="search"><input id="docSearch" type="search" placeholder="Search the documentation…" aria-label="Search documentation"></div>
+    <span class="version">Desktop guide · v2.5</span>
+  </header>
+  <div class="shell" id="top">
+    <nav class="sidebar" aria-label="Documentation navigation">
+      <div class="nav-label">Start here</div>
+      <a href="#overview"><span class="nav-icon">⌂</span>Overview</a>
+      <a href="#quick-start"><span class="nav-icon">➜</span>Quick start</a>
+      <a href="#import"><span class="nav-icon">＋</span>Import scans</a>
+      <a href="#review"><span class="nav-icon">◉</span>Review & segment</a>
+      <a href="#results"><span class="nav-icon">▥</span>Results & reports</a>
+      <div class="nav-label">Workstation features</div>
+      <a href="#database"><span class="nav-icon">▤</span>Patient database</a>
+      <a href="#ai-chat"><span class="nav-icon">✳</span>AI & chat</a>
+      <a href="#troubleshooting"><span class="nav-icon">?</span>Troubleshooting</a>
+      <div class="nav-label">Responsible use</div>
+      <a href="#data-policy"><span class="nav-icon">◇</span>Data handling</a>
+      <a href="#usage-policy"><span class="nav-icon">✓</span>Usage policy</a>
+      <a href="#disclaimer"><span class="nav-icon">!</span>Disclaimers</a>
+      <a href="#about"><span class="nav-icon">ⓘ</span>About NeuroQuant</a>
+    </nav>
+    <main class="content" id="docContent">
+      <section class="hero searchable" id="overview" data-search="overview purpose neuroquant desktop workstation clinical brain tumor segmentation quantitative imaging documentation">
+        <div class="eyebrow">Product guide · operating reference</div>
+        <h1>Make every scan review easier to follow.</h1>
+        <p>Everything clinicians and staff need to know about preparing scans, reviewing images, running brain-tumor segmentation, interpreting measurements, managing records, and using connected features responsibly.</p>
+        <div class="hero-actions"><a class="button" href="#quick-start">Start with the workflow <span>→</span></a><a class="button secondary" href="#disclaimer">Read clinical-use notes</a></div>
+        <div class="hero-meta"><span>Desktop workstation</span><span>Local-first case workflow</span><span>Documentation revision: October 2026</span></div>
+      </section>
+
+      <section class="doc-section searchable" data-search="purpose what is neuroquant overview segmentation quantification review">
+        <div class="section-head"><div><div class="section-kicker">01 · Purpose</div><h2>What NeuroQuant is for</h2></div><p>NeuroQuant brings scan import, image review, automated segmentation, volumetric measurements, and reporting into one desktop workflow.</p></div>
+        <div class="grid three">
+          <article class="card"><div class="icon">◉</div><h3>Review imaging</h3><p>Open multiparametric brain MRI volumes and inspect axial, coronal, sagittal, and sequence views. A CT series can be imported separately into its viewer.</p></article>
+          <article class="card"><div class="icon">✳</div><h3>Support segmentation</h3><p>Run the bundled model on the required MRI sequences to produce tumor-region overlays and measurements for clinical review.</p></article>
+          <article class="card"><div class="icon">▤</div><h3>Keep work organized</h3><p>Maintain patient profiles, scan history, segmentation results, reports, AI conversations, and collaboration features through the workstation.</p></article>
+        </div>
+        <div class="callout warn" style="margin-top:16px"><span class="callout-icon">ⓘ</span><div><strong>Designed to assist clinical review.</strong> The software does not replace a radiologist, neuro-oncologist, neuroradiologist, or the institution’s validated clinical process. Review each image and result before relying on it.</div></div>
+      </section>
+
+      <section class="doc-section searchable" id="quick-start" data-search="quick start workflow install login splash welcome import patient info segmentation review export">
+        <div class="section-head"><div><div class="section-kicker">02 · Workflow</div><h2>A case from start to finish</h2></div><p>Use this sequence for each patient. Staff can prepare the case, while a clinician reviews the images and results.</p></div>
+        <div class="steps">
+          <article class="step"><div><h3>Open the workstation and sign in</h3><p>Start NeuroQuant, complete the welcome/getting-started pages if shown, and sign in with the workstation account. The model’s local segmentation workflow can run without an internet connection; account recovery and connected features need network and service configuration.</p></div></article>
+          <article class="step"><div><h3>Import the patient’s scan</h3><p>Select <b>Import Folder</b> for a case directory or a DICOM series. Select <b>Import Files</b> to stage multiple volume files, add or remove entries, and assign their scan types together. The import flow requires FLAIR, T1, T1ce, and T2; CT is optional.</p></div></article>
+          <article class="step"><div><h3>Enter the required patient information</h3><p>At import, provide the patient’s full name and age. Complete the remaining profile information later from the patient-details management menu when appropriate. Confirm the correct patient and case before continuing.</p></div></article>
+          <article class="step"><div><h3>Review source images before segmentation</h3><p>Use the slice-viewer mode buttons to switch between anatomical views and MRI sequences. Check orientation, coverage, sequence assignment, artifacts, and whether all images belong to the same study.</p></div></article>
+          <article class="step"><div><h3>Run and inspect segmentation</h3><p>Select <b>SCAN</b> to run segmentation. When it finishes, inspect overlays in each plane and the 3D view. Review measurements and adjust display opacity or visibility to understand where the contours fall relative to the images.</p></div></article>
+          <article class="step"><div><h3>Save, document, and export</h3><p>Review the saved database record, verify patient and scan identity, then export a report or data file as needed. Follow institutional rules for where clinical reports may be stored or shared.</p></div></article>
+        </div>
+      </section>
+
+      <section class="doc-section searchable" id="import" data-search="import folder files case folder structure nii nii.gz nrrd mha mhd hdr img dicom CT dsv FLAIR T1 T1ce T2 assignment filename">
+        <div class="section-head"><div><div class="section-kicker">03 · Scan preparation</div><h2>Importing MRI and CT scans</h2></div><p>Good organization reduces wrong-sequence assignments. Use one case folder for one patient and one imaging study.</p></div>
+        <div class="grid two">
+          <article class="card"><h3>Recommended folder layout</h3><div class="code">CaseName/
+  CaseName_FLAIR.nii.gz
+  CaseName_T1.nii.gz
+  CaseName_T1ce.nii.gz
+  CaseName_T2.nii.gz
+  CT/                         (optional)
+    CT series files or CT volume</div><p class="small" style="margin-top:12px">The sequence names are suggestions. Staff can correct every assignment in the import window.</p></article>
+          <article class="card"><h3>Folder import or file import?</h3><p><b>Import Folder</b> scans the selected case folder and its subfolders, finds supported volumes, and groups DICOM images into series. Choose this for a folder of DICOM slices or when MRI and CT are arranged in subfolders.</p><p style="margin-top:12px"><b>Import Files</b> opens a staging list. Add multiple volume files, remove accidental selections, confirm the sequence for each file, then import the set together. Keep the assigned files for one case in the same case folder.</p></article>
+        </div>
+        <div class="table-wrap" style="margin-top:18px"><table><thead><tr><th>Type</th><th>Required?</th><th>What to assign</th><th>Helpful filename text</th></tr></thead><tbody>
+          <tr><td><strong>FLAIR</strong></td><td><span class="tag">Required</span></td><td>Fluid-attenuated inversion recovery MRI volume.</td><td>flair, t2_flair</td></tr>
+          <tr><td><strong>T1</strong></td><td><span class="tag">Required</span></td><td>Non-contrast T1-weighted MRI volume.</td><td>t1, t1_mprage</td></tr>
+          <tr><td><strong>T1ce</strong></td><td><span class="tag">Required</span></td><td>Contrast-enhanced T1-weighted MRI volume.</td><td>t1ce, t1_gd, t1post</td></tr>
+          <tr><td><strong>T2</strong></td><td><span class="tag">Required</span></td><td>T2-weighted MRI volume, distinct from FLAIR.</td><td>t2, t2_tse</td></tr>
+          <tr><td><strong>CT</strong></td><td><span class="tag optional">Optional</span></td><td>CT volume file or a complete CT DICOM series. Keep DICOM images together; folder import detects DICOM series.</td><td>ct, CT subfolder</td></tr>
+        </tbody></table></div>
+        <div class="grid two" style="margin-top:16px">
+          <div class="callout"><span class="callout-icon">✓</span><div><strong>Supported volume formats in the importer</strong><br>NIfTI (.nii, .nii.gz), NRRD (.nrrd), MetaImage (.mha, .mhd), Analyze (.hdr with its paired .img), and DICOM series discovered from a folder.</div></div>
+          <div class="callout warn"><span class="callout-icon">!</span><div><strong>Not every medical file is a scan volume.</strong><br>DSV is not supported by this importer. A DSV file may require export or conversion by the originating application to a supported image volume or DICOM series. Do not rename the extension to make it appear supported.</div></div>
+        </div>
+        <div class="callout danger" style="margin-top:16px"><span class="callout-icon">!</span><div><strong>Before import:</strong> do not mix patients or studies in one case folder. Confirm orientation, completeness, correct sequence type, and that any CT series belongs to the same intended case. Keep original source data unchanged and retain a verified backup.</div></div>
+      </section>
+
+      <section class="doc-section searchable" id="review" data-search="slice viewer axial coronal sagittal CT MRI sequences Flair T1 T1ce T2 3D visualization segmentation scan button review">
+        <div class="section-head"><div><div class="section-kicker">04 · Image review</div><h2>Review, then segment</h2></div><p>The viewer helps navigate and display the imported data. It does not determine whether the images are clinically adequate.</p></div>
+        <div class="grid two">
+          <article class="card"><h3>Two slice-viewer modes</h3><p><b>Anatomical Views</b> groups Axial, Coronal, Sagittal, and CT. <b>MRI Sequences</b> groups FLAIR, T1, T1ce, and T2. Use the buttons above the viewer to change groups. CT remains a separate panel.</p><div class="pill-row"><span class="pill">Axial · horizontal plane</span><span class="pill">Coronal · front-facing plane</span><span class="pill">Sagittal · side-facing plane</span></div></article>
+          <article class="card"><h3>Run segmentation carefully</h3><p>Segmentation uses four MRI input channels: T1, T1ce, T2, and FLAIR. Ensure each selected volume is the correct sequence, that all four belong to the same examination, and that the acquisition covers the relevant anatomy. CT is not a substitute for a required MRI channel.</p></article>
+          <article class="card"><h3>Understand the displayed regions</h3><p>The result includes automated labels such as active tumor core and peritumoral edema, with computed volumes and regional summaries. These are model outputs. They may be incomplete, over-inclusive, or anatomically misplaced, especially with unusual acquisition protocols, artifacts, postoperative change, or atypical lesions.</p></article>
+          <article class="card"><h3>Use the overlays as a review aid</h3><p>Toggle layers, adjust opacity, and move through slices to examine the segmentation in context. Verify the visible contours across all planes. A plausible 3D surface or a precise-looking number does not establish diagnostic correctness.</p></article>
+          <article class="card"><h3>Realistic patient view</h3><p>After segmentation, select <b>Realistic</b> to build a higher-detail shaded surface from the current patient's MRI and tumor mask. It loads on demand and may take a moment the first time. The surface is an approximation derived from image intensity; its appearance depends on scan quality and preprocessing, so verify it against the slice views.</p></article>
+        </div>
+      </section>
+
+      <section class="doc-section searchable" id="results" data-search="results volumetric metrics lobes report export PDF CSV PNG ZIP GIF saved">
+        <div class="section-head"><div><div class="section-kicker">05 · Results</div><h2>Measurements and reports</h2></div><p>Use measurements to structure review and follow-up, while confirming the underlying image data and segmentation.</p></div>
+        <div class="grid three">
+          <article class="card"><div class="icon">◧</div><h3>Volumetric metrics</h3><p>Volumes are calculated from segmented voxels and image spacing, displayed in cubic millimeters (mm³). Review core, edema, total tumor, intracranial, and regional values shown by the application.</p></article>
+          <article class="card"><div class="icon">▤</div><h3>PDF reports</h3><p>Export a structured report for review and documentation. Check the patient identifier, scan date, measurements, and intended recipient before saving or distributing it.</p></article>
+          <article class="card"><div class="icon">⇩</div><h3>Other exports</h3><p>The workstation provides data and visualization exports such as CSV, images, animation/GIF, or packaged files in relevant workflows. Choose an approved destination and verify the saved output.</p></article>
+        </div>
+        <div class="callout warn" style="margin-top:16px"><span class="callout-icon">ⓘ</span><div>Volumes depend on segmentation quality, voxel spacing, image resampling, and the source acquisition. Compare like-for-like sequences and acquisition settings when monitoring change; do not interpret small numeric differences without reviewing the images.</div></div>
+      </section>
+
+      <section class="doc-section searchable" id="database" data-search="database patient profile patient details scan history records sqlite local database user owner filter search backup edit details">
+        <div class="section-head"><div><div class="section-kicker">06 · Records</div><h2>Patient profiles and database</h2></div><p>Enter only the information needed for the authorized clinical workflow and keep the patient identity consistent across records.</p></div>
+        <div class="grid two">
+          <article class="card"><h3>At import</h3><p>The import intake asks for the patient's full name and age so the case can be saved and prepared. The full profile can be completed or updated later through the patient-details menu. Use the supplied date-of-birth guidance and verify age against the date entered.</p></article>
+          <article class="card"><h3>Local workstation records</h3><p>The Windows build stores its SQLite database under <code>%LOCALAPPDATA%\NeuroQuant\data\neuroquant.db</code>. Patient records, case history, measurements, and related local data are stored on that computer. Protect the Windows account and device and follow your organization’s backup and retention procedures.</p></article>
+        </div>
+        <div class="callout warn" style="margin-top:16px"><span class="callout-icon">!</span><div>Deleting, reinstalling, moving, or replacing a device can affect local records. Before maintenance, use the institution-approved backup procedure and verify that backups can be restored. Do not treat cloud availability as proof that every local file has synchronized.</div></div>
+      </section>
+
+      <section class="doc-section searchable" id="ai-chat" data-search="AI assistant generative answers prompt chat room collaboration Firestore Supabase attachment image account owner history cloud internet API key">
+        <div class="section-head"><div><div class="section-kicker">07 · Connected features</div><h2>AI assistant and chat room</h2></div><p>These features are separate from the local segmentation model and may send information to connected services.</p></div>
+        <div class="grid two">
+          <article class="card"><h3>NeuroQuant AI</h3><p>The AI panel provides informational responses. It is not the segmentation model, does not validate segmentation, and must not be treated as a diagnostic authority. Review every response against the source images, patient context, and reliable clinical references. Avoid including identifiable patient information unless the service and your organization explicitly permit it.</p><p style="margin-top:12px">AI chat history is stored locally by signed-in user. If cloud sync is configured, chat messages can also be mirrored to Firestore; attached image files may be uploaded to Supabase Storage.</p></article>
+          <article class="card"><h3>Collaboration chat</h3><p>The chat room supports communication among workstation users. Messages and attachments use configured cloud services and require internet access. When an image or file is sent, it is uploaded to the configured Supabase Storage bucket and the associated message is handled through Firestore.</p><p style="margin-top:12px">Confirm recipient, destination, access policy, and permission before sharing clinical information. A failed upload may leave a local copy without a cloud copy.</p></article>
+        </div>
+        <div class="callout danger" style="margin-top:16px"><span class="callout-icon">!</span><div><strong>Cloud setup is not an institutional privacy review.</strong> A public bucket, permissive storage policy, exposed service credential, or shared account may expose data. Administrators must configure authentication, least-privilege access, retention, and monitoring before enabling clinical uploads.</div></div>
+      </section>
+
+      <section class="doc-section searchable" id="troubleshooting" data-search="troubleshooting import error missing sequences unsupported file DSV CT scan DICOM bucket upload cloud images AI response dark theme build fonts">
+        <div class="section-head"><div><div class="section-kicker">08 · Help</div><h2>Troubleshooting</h2></div><p>Resolve common import and storage issues before repeating a workflow.</p></div>
+        <div class="accordion">
+          <details open><summary>The importer cannot find my scan file</summary><div><p>Check that the file is a supported NIfTI, NRRD, MetaImage, or Analyze volume. DICOM slices are often extensionless; use <b>Import Folder</b> and select the folder containing the complete series. DSV is not a supported imaging volume in this importer.</p></div></details>
+          <details><summary>The sequence suggestion is wrong</summary><div><p>Change the type in the “Use as” column before continuing. Filename recognition is a convenience only. Confirm that exactly one correct volume is assigned to each required type and that T1ce is the contrast-enhanced T1 sequence.</p></div></details>
+          <details><summary>It says a required MRI sequence is missing</summary><div><p>Assign FLAIR, T1, T1ce, and T2. CT is optional and cannot fill a missing MRI sequence. If a sequence file is in another folder, use folder import or organize the four case volumes together first.</p></div></details>
+          <details><summary>My DICOM CT is not detected</summary><div><p>Keep all slices of one CT series in the selected case folder, preferably in a clearly named <code>CT</code> subfolder. Ensure the folder contains a complete, readable series and that it belongs to this patient’s study.</p></div></details>
+          <details><summary>Cloud image upload was denied</summary><div><p>Verify the exact configured Supabase project and bucket, bucket privacy, upload policy, authentication method, and publishable-key configuration. Do not put a Supabase secret/service-role key in the desktop application. If cloud upload fails, check whether the application reports that the local file remains available.</p></div></details>
+          <details><summary>A result or text is hard to see</summary><div><p>Switch between light and dark themes in Settings, confirm contrast, and use the application-wide font-size controls. If the issue remains, record the app version, operating system, selected theme, and the steps that reproduce it; do not include patient identifiers in a public issue report.</p></div></details>
+        </div>
+      </section>
+
+      <section class="doc-section searchable" id="data-policy" data-search="privacy policy data handling patient information PHI local storage SQLite Firestore Firebase Supabase cloud external data retention backup access">
+        <div class="section-head"><div><div class="section-kicker">09 · Data handling</div><h2>Privacy and data handling guide</h2></div><p>This section describes the product’s data paths and recommended safeguards. It is not a contract or legal privacy notice.</p></div>
+        <div class="callout warn"><span class="callout-icon">ⓘ</span><div><strong>Institutional review required.</strong> Your organization must decide whether the application, AI provider, Firebase project, Supabase project, cloud region, account model, and retention settings are approved for patient data. No certification or regulatory compliance claim is made by this documentation.</div></div>
+        <div class="table-wrap" style="margin-top:16px"><table><thead><tr><th>Information</th><th>Where it may be processed or stored</th><th>Operator action</th></tr></thead><tbody>
+          <tr><td><strong>Patient profiles, scan history, measurements</strong></td><td>Local SQLite database in the user’s NeuroQuant data folder. Workstation backup/recovery functions may use Firebase/Firestore when configured.</td><td>Secure the device and account; approve backup destination and retention; verify restoration.</td></tr>
+          <tr><td><strong>AI prompts and responses</strong></td><td>Local user-owned chat history. If cloud sync is enabled, the chat session is mirrored to Firestore. The AI provider receives requests when the AI feature is used.</td><td>Review provider terms and institutional approval. Avoid identifiable information unless specifically authorized.</td></tr>
+          <tr><td><strong>Chat attachments and generated artifacts</strong></td><td>Local files may remain on the workstation. When cloud upload is enabled, bytes may be stored in Supabase Storage; message or attachment references may be stored in Firestore.</td><td>Use private buckets and least-privilege rules; verify access, expiry, and deletion procedures.</td></tr>
+          <tr><td><strong>Credentials and API keys</strong></td><td>Account credentials and application settings use local storage; provider/API credentials may be handled by the operating system credential store or configured service.</td><td>Never share a workstation account or embed privileged service-role credentials in a distributed build.</td></tr>
+        </tbody></table></div>
+        <div class="grid two" style="margin-top:16px">
+          <article class="card"><h3>Recommended safeguards</h3><p>Use an organization-managed computer, individual accounts, strong device access controls, encrypted storage where required, approved backup destinations, and least-privilege cloud policies. Limit access to staff who need it. Review export folders, temporary files, and downloads for sensitive information.</p></article>
+          <article class="card"><h3>Retention and deletion</h3><p>Follow your institution’s retention schedule. Deleting an item in the app may not delete previously exported copies, backups, cloud objects, browser caches, or shared recipient copies. Administrators should define and document deletion procedures for every configured service.</p></article>
+        </div>
+      </section>
+
+      <section class="doc-section searchable" id="usage-policy" data-search="acceptable use policy authorized users account sharing misuse access rights security backups updates usage">
+        <div class="section-head"><div><div class="section-kicker">10 · Policies</div><h2>Responsible-use policy</h2></div><p>Use the workstation only within the authority and procedures granted by your organization.</p></div>
+        <div class="grid two">
+          <article class="card"><h3>Authorized use</h3><p>Use NeuroQuant for permitted imaging review, segmentation support, measurement, reporting, training, or research activities under applicable institutional approvals. Confirm the patient, study, and intended task before import and export.</p></article>
+          <article class="card"><h3>Protect access</h3><p>Use individual accounts. Do not bypass access controls, share credentials, expose storage keys, or grant broad anonymous access to clinical buckets. Report suspected loss, disclosure, or account compromise through your institutional incident process.</p></article>
+          <article class="card"><h3>Manage data carefully</h3><p>Do not upload or send patient information to unapproved services. Do not use real patient records for demonstrations or public screenshots unless authorized and appropriately de-identified.</p></article>
+          <article class="card"><h3>Keep the workflow reviewable</h3><p>Preserve the source data, sequence assignments, patient linkage, and relevant output context. Record manual corrections and clinical interpretations in the approved clinical record, not solely in an AI conversation.</p></article>
+        </div>
+      </section>
+
+      <section class="doc-section searchable" id="disclaimer" data-search="disclaimer medical clinical diagnosis treatment decisions safety warranty liability model limitations not medical advice research validation">
+        <div class="section-head"><div><div class="section-kicker">11 · Important limitations</div><h2>Clinical-use disclaimer</h2></div><p>Read this before using model output in any clinical or research workflow.</p></div>
+        <div class="callout danger"><span class="callout-icon">!</span><div><strong>NeuroQuant is a clinical decision-support and image-review tool. It does not provide a diagnosis or treatment recommendation.</strong> Automated segmentations, volumetric values, AI-generated text, and reports may be wrong, incomplete, or unsuitable for a particular patient or scan.</div></div>
+        <div class="grid two" style="margin-top:16px">
+          <article class="card"><h3>Clinician responsibility</h3><p>A qualified clinician must review the original imaging, confirm that the correct sequences and patient were selected, inspect the segmentation, interpret measurements in clinical context, and make all diagnostic and treatment decisions. Do not rely on a model output alone or delay necessary care while using the software.</p></article>
+          <article class="card"><h3>Performance is not guaranteed</h3><p>Results can vary with acquisition protocol, image quality, voxel spacing, preprocessing, lesion characteristics, prior surgery or treatment, and other factors. The software may fail silently or produce plausible-looking but incorrect output. Validate locally before any clinical deployment.</p></article>
+          <article class="card"><h3>AI responses</h3><p>Generative AI may produce inaccurate, outdated, biased, or fabricated statements. It may omit important context and is not a substitute for professional judgment, current guidelines, or direct consultation with an appropriate specialist.</p></article>
+          <article class="card"><h3>Local validation and governance</h3><p>Before clinical use, the responsible organization should assess intended use, performance, workflow risks, cybersecurity, privacy, human factors, training, and applicable regulatory obligations. This website does not establish regulatory clearance or clinical validation.</p></article>
+        </div>
+      </section>
+
+      <section class="doc-section searchable" id="about" data-search="about us purpose developer team contact NeuroQuant version release support organization">
+        <div class="section-head"><div><div class="section-kicker">12 · About</div><h2>About NeuroQuant</h2></div><p>A focused workstation for brain-tumor imaging review and quantitative support.</p></div>
+        <div class="grid two">
+          <article class="card"><h3>Purpose</h3><p>NeuroQuant was created to bring scan preparation, MRI review, automated brain-tumor segmentation, quantitative measurements, patient-case organization, and clinical reporting into a coherent desktop application. The goal is to make the workflow easier to inspect and discuss, while keeping clinicians responsible for interpretation.</p></article>
+          <article class="card"><h3>Project and support</h3><p>This documentation is bundled with the NeuroQuant desktop application. It does not identify a legal manufacturer, hospital, research sponsor, or support organization because those details must be supplied by the project owner. For deployment, policy, or clinical validation questions, contact the NeuroQuant administrator or the organization that provided your build.</p><div class="pill-row"><span class="pill">NeuroQuant v2.5</span><span class="pill">Documentation only</span><span class="pill">No patient-data forms</span></div></article>
+        </div>
+      </section>
+
+      <div class="no-results" id="noResults">No matching documentation sections. Try a shorter phrase such as “DICOM”, “CT”, “cloud”, or “segmentation”.</div>
+      <footer class="footer"><div class="footer-grid"><div><strong>NeuroQuant Documentation</strong><br>Local product guide · no forms, analytics, or patient-data collection on this page.</div><div>Documentation revision: October 2026 · Application reference: v2.5<br><a href="#top">Back to top ↑</a></div></div><p class="small">Policies and disclaimers here are informational product guidance. Your institution’s approved policies, service agreements, and applicable laws govern actual use.</p></footer>
+    </main>
+  </div>
+  <script>
+    const search=document.getElementById('docSearch');
+    const sections=[...document.querySelectorAll('.searchable')];
+    const noResults=document.getElementById('noResults');
+    search.addEventListener('input',()=>{
+      const q=search.value.trim().toLowerCase();let visible=0;
+      sections.forEach(section=>{const match=!q||(`${section.innerText} ${section.dataset.search||''}`).toLowerCase().includes(q);section.classList.toggle('hide',!match);if(match)visible++;});
+      noResults.classList.toggle('show',visible===0);
+      if(q){sections.forEach(section=>section.querySelectorAll('details').forEach(item=>item.open=true));}
+    });
+    const links=[...document.querySelectorAll('.sidebar a')];
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(link=>link.classList.toggle('active',link.hash==='#'+entry.target.id));}}),{rootMargin:'-18% 0px -68% 0px'});
+    document.querySelectorAll('main section[id]').forEach(section=>observer.observe(section));
+  </script>
+</body>
+</html>

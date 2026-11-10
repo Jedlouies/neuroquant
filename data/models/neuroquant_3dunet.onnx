@@ -1,0 +1,2009 @@
+
+pytorch
+2.14.0+cpu:È«
+Ñ
+	input_mri
+model.0.residual.weight
+model.0.residual.biasconv3dnode_conv3d"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†Jﬁ
+	namespace–: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.0: monai.networks.blocks.convolutions.ResidualUnit/model.0.residual: torch.nn.modules.conv.Conv3d/conv3d: aten.conv3d.defaultJ◊
+pkg.torch.onnx.class_hierarchy¥['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.conv.Conv3d', 'aten.conv3d.default']JŒ
+pkg.torch.onnx.fx_node≥%conv3d : [num_users=1] = call_function[target=torch.ops.aten.conv3d.default](args = (%x, %p_model_0_residual_weight, %p_model_0_residual_bias, [2, 2, 2], [1, 1, 1]), kwargs = {})JT
+pkg.torch.onnx.name_scopes6['', 'model', 'model.0', 'model.0.residual', 'conv3d']J 
+pkg.torch.onnx.stack_trace´File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 316, in forward
+    res: torch.Tensor = self.residual(x)  # create the additive residual from x
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\conv.py", line 735, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+ª
+	input_mri
+model.0.conv.unit0.conv.weight
+model.0.conv.unit0.conv.biasgetitemnode_Conv_94"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†Jﬂ
+	namespace—: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.0: monai.networks.blocks.convolutions.ResidualUnit/model.0.conv: torch.nn.modules.container.Sequential/model.0.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.0.conv.unit0.adn: monai.networks.blocks.acti_norm.ADN/model.0.conv.unit0.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training: aten._native_batch_norm_legit_no_training.defaultJ:
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvJÅ
+pkg.torch.onnx.class_hierarchyﬁ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']JÍ
+pkg.torch.onnx.fx_nodeœ%_native_batch_norm_legit_no_training : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv3d_1, %p_model_0_conv_unit0_adn_n_weight, %p_model_0_conv_unit0_adn_n_bias, %b_model_0_conv_unit0_adn_n_running_mean, %b_model_0_conv_unit0_adn_n_running_var, 0.1, 1e-05), kwargs = {})Jª
+pkg.torch.onnx.name_scopesú['', 'model', 'model.0', 'model.0.conv', 'model.0.conv.unit0', 'model.0.conv.unit0.adn', 'model.0.conv.unit0.adn.N', '_native_batch_norm_legit_no_training']JÜ
+pkg.torch.onnx.stack_traceÁFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+ç
+getitem
+val_9prelu
+node_prelu"PReluJú
+	namespaceé: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.0: monai.networks.blocks.convolutions.ResidualUnit/model.0.conv: torch.nn.modules.container.Sequential/model.0.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.0.conv.unit0.adn: monai.networks.blocks.acti_norm.ADN/model.0.conv.unit0.adn.A: torch.nn.modules.activation.PReLU/prelu: aten.prelu.defaultJ›
+pkg.torch.onnx.class_hierarchy∫['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']J™
+pkg.torch.onnx.fx_nodeè%prelu : [num_users=1] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem, %p_model_0_conv_unit0_adn_a_weight), kwargs = {})Jõ
+pkg.torch.onnx.name_scopes}['', 'model', 'model.0', 'model.0.conv', 'model.0.conv.unit0', 'model.0.conv.unit0.adn', 'model.0.conv.unit0.adn.A', 'prelu']Jñ
+pkg.torch.onnx.stack_trace˜File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+ø
+prelu
+model.0.conv.unit1.conv.weight
+model.0.conv.unit1.conv.bias	getitem_3node_Conv_95"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†J·
+	namespace”: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.0: monai.networks.blocks.convolutions.ResidualUnit/model.0.conv: torch.nn.modules.container.Sequential/model.0.conv.unit1: monai.networks.blocks.convolutions.Convolution/model.0.conv.unit1.adn: monai.networks.blocks.acti_norm.ADN/model.0.conv.unit1.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training_1: aten._native_batch_norm_legit_no_training.defaultJ:
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvJÅ
+pkg.torch.onnx.class_hierarchyﬁ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']JÏ
+pkg.torch.onnx.fx_node—%_native_batch_norm_legit_no_training_1 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv3d_2, %p_model_0_conv_unit1_adn_n_weight, %p_model_0_conv_unit1_adn_n_bias, %b_model_0_conv_unit1_adn_n_running_mean, %b_model_0_conv_unit1_adn_n_running_var, 0.1, 1e-05), kwargs = {})JΩ
+pkg.torch.onnx.name_scopesû['', 'model', 'model.0', 'model.0.conv', 'model.0.conv.unit1', 'model.0.conv.unit1.adn', 'model.0.conv.unit1.adn.N', '_native_batch_norm_legit_no_training_1']JÜ
+pkg.torch.onnx.stack_traceÁFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+ú
+	getitem_3
+val_16prelu_1node_prelu_1"PReluJû
+	namespaceê: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.0: monai.networks.blocks.convolutions.ResidualUnit/model.0.conv: torch.nn.modules.container.Sequential/model.0.conv.unit1: monai.networks.blocks.convolutions.Convolution/model.0.conv.unit1.adn: monai.networks.blocks.acti_norm.ADN/model.0.conv.unit1.adn.A: torch.nn.modules.activation.PReLU/prelu_1: aten.prelu.defaultJ›
+pkg.torch.onnx.class_hierarchy∫['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']JÆ
+pkg.torch.onnx.fx_nodeì%prelu_1 : [num_users=1] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem_3, %p_model_0_conv_unit1_adn_a_weight), kwargs = {})Jù
+pkg.torch.onnx.name_scopes['', 'model', 'model.0', 'model.0.conv', 'model.0.conv.unit1', 'model.0.conv.unit1.adn', 'model.0.conv.unit1.adn.A', 'prelu_1']Jñ
+pkg.torch.onnx.stack_trace˜File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+ˇ
+prelu_1
+conv3dadd_42node_add_42"AddJ´
+	namespaceù: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.0: monai.networks.blocks.convolutions.ResidualUnit/add_42: aten.add.TensorJ≥
+pkg.torch.onnx.class_hierarchyê['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'aten.add.Tensor']Jå
+pkg.torch.onnx.fx_noder%add_42 : [num_users=3] = call_function[target=torch.ops.aten.add.Tensor](args = (%prelu_1, %conv3d), kwargs = {})J@
+pkg.torch.onnx.name_scopes"['', 'model', 'model.0', 'add_42']Jú
+pkg.torch.onnx.stack_trace˝File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 318, in forward
+    return cx + res  # add the residual to the output
+◊
+add_42
+#model.1.submodule.0.residual.weight
+!model.1.submodule.0.residual.biasconv3d_3node_conv3d_3"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†JÏ
+	namespaceﬁ: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.0: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.0.residual: torch.nn.modules.conv.Conv3d/conv3d_3: aten.conv3d.defaultJµ
+pkg.torch.onnx.class_hierarchyí['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.conv.Conv3d', 'aten.conv3d.default']JÌ
+pkg.torch.onnx.fx_node“%conv3d_3 : [num_users=1] = call_function[target=torch.ops.aten.conv3d.default](args = (%add_42, %p_model_1_submodule_0_residual_weight, %p_model_1_submodule_0_residual_bias, [2, 2, 2], [1, 1, 1]), kwargs = {})Jé
+pkg.torch.onnx.name_scopesp['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.0', 'model.1.submodule.0.residual', 'conv3d_3']Jæ
+pkg.torch.onnx.stack_traceüFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 316, in forward
+    res: torch.Tensor = self.residual(x)  # create the additive residual from x
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\conv.py", line 735, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+Ê
+add_42
+*model.1.submodule.0.conv.unit0.conv.weight
+(model.1.submodule.0.conv.unit0.conv.bias	getitem_6node_Conv_96"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†Jë
+	namespaceÉ: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.0: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.0.conv: torch.nn.modules.container.Sequential/model.1.submodule.0.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.0.conv.unit0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.0.conv.unit0.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training_2: aten._native_batch_norm_legit_no_training.defaultJ:
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvJﬂ
+pkg.torch.onnx.class_hierarchyº['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']Jú
+pkg.torch.onnx.fx_nodeÅ%_native_batch_norm_legit_no_training_2 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv3d_4, %p_model_1_submodule_0_conv_unit0_adn_n_weight, %p_model_1_submodule_0_conv_unit0_adn_n_bias, %b_model_1_submodule_0_conv_unit0_adn_n_running_mean, %b_model_1_submodule_0_conv_unit0_adn_n_running_var, 0.1, 1e-05), kwargs = {})Jô
+pkg.torch.onnx.name_scopes˙['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.0', 'model.1.submodule.0.conv', 'model.1.submodule.0.conv.unit0', 'model.1.submodule.0.conv.unit0.adn', 'model.1.submodule.0.conv.unit0.adn.N', '_native_batch_norm_legit_no_training_2']J˙
+pkg.torch.onnx.stack_trace€File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+á
+	getitem_6
+val_23prelu_2node_prelu_2"PReluJŒ
+	namespace¿: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.0: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.0.conv: torch.nn.modules.container.Sequential/model.1.submodule.0.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.0.conv.unit0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.0.conv.unit0.adn.A: torch.nn.modules.activation.PReLU/prelu_2: aten.prelu.defaultJª
+pkg.torch.onnx.class_hierarchyò['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']J∫
+pkg.torch.onnx.fx_nodeü%prelu_2 : [num_users=1] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem_6, %p_model_1_submodule_0_conv_unit0_adn_a_weight), kwargs = {})J˙
+pkg.torch.onnx.name_scopes€['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.0', 'model.1.submodule.0.conv', 'model.1.submodule.0.conv.unit0', 'model.1.submodule.0.conv.unit0.adn', 'model.1.submodule.0.conv.unit0.adn.A', 'prelu_2']Jä	
+pkg.torch.onnx.stack_traceÎFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+Á
+prelu_2
+*model.1.submodule.0.conv.unit1.conv.weight
+(model.1.submodule.0.conv.unit1.conv.bias	getitem_9node_Conv_97"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†Jë
+	namespaceÉ: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.0: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.0.conv: torch.nn.modules.container.Sequential/model.1.submodule.0.conv.unit1: monai.networks.blocks.convolutions.Convolution/model.1.submodule.0.conv.unit1.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.0.conv.unit1.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training_3: aten._native_batch_norm_legit_no_training.defaultJ:
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvJﬂ
+pkg.torch.onnx.class_hierarchyº['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']Jú
+pkg.torch.onnx.fx_nodeÅ%_native_batch_norm_legit_no_training_3 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv3d_5, %p_model_1_submodule_0_conv_unit1_adn_n_weight, %p_model_1_submodule_0_conv_unit1_adn_n_bias, %b_model_1_submodule_0_conv_unit1_adn_n_running_mean, %b_model_1_submodule_0_conv_unit1_adn_n_running_var, 0.1, 1e-05), kwargs = {})Jô
+pkg.torch.onnx.name_scopes˙['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.0', 'model.1.submodule.0.conv', 'model.1.submodule.0.conv.unit1', 'model.1.submodule.0.conv.unit1.adn', 'model.1.submodule.0.conv.unit1.adn.N', '_native_batch_norm_legit_no_training_3']J˙
+pkg.torch.onnx.stack_trace€File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+á
+	getitem_9
+val_30prelu_3node_prelu_3"PReluJŒ
+	namespace¿: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.0: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.0.conv: torch.nn.modules.container.Sequential/model.1.submodule.0.conv.unit1: monai.networks.blocks.convolutions.Convolution/model.1.submodule.0.conv.unit1.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.0.conv.unit1.adn.A: torch.nn.modules.activation.PReLU/prelu_3: aten.prelu.defaultJª
+pkg.torch.onnx.class_hierarchyò['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']J∫
+pkg.torch.onnx.fx_nodeü%prelu_3 : [num_users=1] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem_9, %p_model_1_submodule_0_conv_unit1_adn_a_weight), kwargs = {})J˙
+pkg.torch.onnx.name_scopes€['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.0', 'model.1.submodule.0.conv', 'model.1.submodule.0.conv.unit1', 'model.1.submodule.0.conv.unit1.adn', 'model.1.submodule.0.conv.unit1.adn.A', 'prelu_3']Jä	
+pkg.torch.onnx.stack_traceÎFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+Å
+prelu_3
+conv3d_3add_91node_add_91"AddJ´
+	namespaceù: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.0: monai.networks.blocks.convolutions.ResidualUnit/add_91: aten.add.TensorJë
+pkg.torch.onnx.class_hierarchyÓ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'aten.add.Tensor']Jé
+pkg.torch.onnx.fx_nodet%add_91 : [num_users=3] = call_function[target=torch.ops.aten.add.Tensor](args = (%prelu_3, %conv3d_3), kwargs = {})Jl
+pkg.torch.onnx.name_scopesN['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.0', 'add_91']Jê
+pkg.torch.onnx.stack_traceÒFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 318, in forward
+    return cx + res  # add the residual to the output
+Œ
+add_91
+/model.1.submodule.1.submodule.0.residual.weight
+-model.1.submodule.1.submodule.0.residual.biasconv3d_6node_conv3d_6"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†Jê
+	namespaceÇ: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.0: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.1.submodule.0.residual: torch.nn.modules.conv.Conv3d/conv3d_6: aten.conv3d.defaultJì
+pkg.torch.onnx.class_hierarchy['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.conv.Conv3d', 'aten.conv3d.default']JÖ
+pkg.torch.onnx.fx_nodeÍ%conv3d_6 : [num_users=1] = call_function[target=torch.ops.aten.conv3d.default](args = (%add_91, %p_model_1_submodule_1_submodule_0_residual_weight, %p_model_1_submodule_1_submodule_0_residual_bias, [2, 2, 2], [1, 1, 1]), kwargs = {})Jﬂ
+pkg.torch.onnx.name_scopes¿['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.0', 'model.1.submodule.1.submodule.0.residual', 'conv3d_6']J≤
+pkg.torch.onnx.stack_traceìFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 316, in forward
+    res: torch.Tensor = self.residual(x)  # create the additive residual from x
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\conv.py", line 735, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+Ω
+add_91
+6model.1.submodule.1.submodule.0.conv.unit0.conv.weight
+4model.1.submodule.1.submodule.0.conv.unit0.conv.bias
+getitem_12node_Conv_98"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†JŸ
+	namespaceÀ: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.0: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.1.submodule.0.conv: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.0.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.1.submodule.0.conv.unit0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.1.submodule.0.conv.unit0.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training_4: aten._native_batch_norm_legit_no_training.defaultJ:
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvJΩ
+pkg.torch.onnx.class_hierarchyö['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']JÃ
+pkg.torch.onnx.fx_node±%_native_batch_norm_legit_no_training_4 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv3d_7, %p_model_1_submodule_1_submodule_0_conv_unit0_adn_n_weight, %p_model_1_submodule_1_submodule_0_conv_unit0_adn_n_bias, %b_model_1_submodule_1_submodule_0_conv_unit0_adn_n_running_mean, %b_model_1_submodule_1_submodule_0_conv_unit0_adn_n_running_var, 0.1, 1e-05), kwargs = {})Jç
+pkg.torch.onnx.name_scopesÓ['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.0', 'model.1.submodule.1.submodule.0.conv', 'model.1.submodule.1.submodule.0.conv.unit0', 'model.1.submodule.1.submodule.0.conv.unit0.adn', 'model.1.submodule.1.submodule.0.conv.unit0.adn.N', '_native_batch_norm_legit_no_training_4']JÓ
+
+pkg.torch.onnx.stack_traceœ
+File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+£
+
+getitem_12
+val_37prelu_4node_prelu_4"PReluJñ
+	namespaceà: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.0: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.1.submodule.0.conv: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.0.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.1.submodule.0.conv.unit0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.1.submodule.0.conv.unit0.adn.A: torch.nn.modules.activation.PReLU/prelu_4: aten.prelu.defaultJô
+pkg.torch.onnx.class_hierarchyˆ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']J«
+pkg.torch.onnx.fx_node¨%prelu_4 : [num_users=1] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem_12, %p_model_1_submodule_1_submodule_0_conv_unit0_adn_a_weight), kwargs = {})JÓ
+pkg.torch.onnx.name_scopesœ['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.0', 'model.1.submodule.1.submodule.0.conv', 'model.1.submodule.1.submodule.0.conv.unit0', 'model.1.submodule.1.submodule.0.conv.unit0.adn', 'model.1.submodule.1.submodule.0.conv.unit0.adn.A', 'prelu_4']J˛
+
+pkg.torch.onnx.stack_traceﬂ
+File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+æ
+prelu_4
+6model.1.submodule.1.submodule.0.conv.unit1.conv.weight
+4model.1.submodule.1.submodule.0.conv.unit1.conv.bias
+getitem_15node_Conv_99"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†JŸ
+	namespaceÀ: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.0: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.1.submodule.0.conv: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.0.conv.unit1: monai.networks.blocks.convolutions.Convolution/model.1.submodule.1.submodule.0.conv.unit1.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.1.submodule.0.conv.unit1.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training_5: aten._native_batch_norm_legit_no_training.defaultJ:
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvJΩ
+pkg.torch.onnx.class_hierarchyö['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']JÃ
+pkg.torch.onnx.fx_node±%_native_batch_norm_legit_no_training_5 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv3d_8, %p_model_1_submodule_1_submodule_0_conv_unit1_adn_n_weight, %p_model_1_submodule_1_submodule_0_conv_unit1_adn_n_bias, %b_model_1_submodule_1_submodule_0_conv_unit1_adn_n_running_mean, %b_model_1_submodule_1_submodule_0_conv_unit1_adn_n_running_var, 0.1, 1e-05), kwargs = {})Jç
+pkg.torch.onnx.name_scopesÓ['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.0', 'model.1.submodule.1.submodule.0.conv', 'model.1.submodule.1.submodule.0.conv.unit1', 'model.1.submodule.1.submodule.0.conv.unit1.adn', 'model.1.submodule.1.submodule.0.conv.unit1.adn.N', '_native_batch_norm_legit_no_training_5']JÓ
+
+pkg.torch.onnx.stack_traceœ
+File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+£
+
+getitem_15
+val_44prelu_5node_prelu_5"PReluJñ
+	namespaceà: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.0: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.1.submodule.0.conv: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.0.conv.unit1: monai.networks.blocks.convolutions.Convolution/model.1.submodule.1.submodule.0.conv.unit1.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.1.submodule.0.conv.unit1.adn.A: torch.nn.modules.activation.PReLU/prelu_5: aten.prelu.defaultJô
+pkg.torch.onnx.class_hierarchyˆ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']J«
+pkg.torch.onnx.fx_node¨%prelu_5 : [num_users=1] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem_15, %p_model_1_submodule_1_submodule_0_conv_unit1_adn_a_weight), kwargs = {})JÓ
+pkg.torch.onnx.name_scopesœ['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.0', 'model.1.submodule.1.submodule.0.conv', 'model.1.submodule.1.submodule.0.conv.unit1', 'model.1.submodule.1.submodule.0.conv.unit1.adn', 'model.1.submodule.1.submodule.0.conv.unit1.adn.A', 'prelu_5']J˛
+
+pkg.torch.onnx.stack_traceﬂ
+File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+∂
+prelu_5
+conv3d_6add_140node_add_140"AddJƒ
+	namespace∂: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.0: monai.networks.blocks.convolutions.ResidualUnit/add_140: aten.add.TensorJÔ
+pkg.torch.onnx.class_hierarchyÃ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'aten.add.Tensor']Jè
+pkg.torch.onnx.fx_nodeu%add_140 : [num_users=3] = call_function[target=torch.ops.aten.add.Tensor](args = (%prelu_5, %conv3d_6), kwargs = {})J≤
+pkg.torch.onnx.name_scopesì['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.0', 'add_140']JÑ
+pkg.torch.onnx.stack_traceÂFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 318, in forward
+    return cx + res  # add the residual to the output
+≥
+add_140
+9model.1.submodule.1.submodule.1.submodule.residual.weight
+7model.1.submodule.1.submodule.1.submodule.residual.biasconv3d_9node_conv3d_9"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@ @ @ @ @ @ †J˜
+	namespaceÈ: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule.1.submodule: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.1.submodule.1.submodule.residual: torch.nn.modules.conv.Conv3d/conv3d_9: aten.conv3d.defaultJ»
+pkg.torch.onnx.class_hierarchy•['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.conv.Conv3d', 'aten.conv3d.default']JÑ
+pkg.torch.onnx.fx_nodeÈ%conv3d_9 : [num_users=1] = call_function[target=torch.ops.aten.conv3d.default](args = (%add_140, %p_model_1_submodule_1_submodule_1_submodule_residual_weight, %p_model_1_submodule_1_submodule_1_submodule_residual_bias), kwargs = {})Jñ
+pkg.torch.onnx.name_scopes˜['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.1', 'model.1.submodule.1.submodule.1.submodule', 'model.1.submodule.1.submodule.1.submodule.residual', 'conv3d_9']J∞	
+pkg.torch.onnx.stack_traceë	File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 316, in forward
+    res: torch.Tensor = self.residual(x)  # create the additive residual from x
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\conv.py", line 735, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+â#
+add_140
+@model.1.submodule.1.submodule.1.submodule.conv.unit0.conv.weight
+>model.1.submodule.1.submodule.1.submodule.conv.unit0.conv.bias
+getitem_18node_Conv_100"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†Jﬁ
+	namespace–: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule.1.submodule: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.1.submodule.1.submodule.conv: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.1.submodule.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.1.submodule.1.submodule.conv.unit0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.1.submodule.1.submodule.conv.unit0.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training_6: aten._native_batch_norm_legit_no_training.defaultJ:
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvJÚ
+pkg.torch.onnx.class_hierarchyœ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']Jı
+pkg.torch.onnx.fx_node⁄%_native_batch_norm_legit_no_training_6 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv3d_10, %p_model_1_submodule_1_submodule_1_submodule_conv_unit0_adn_n_weight, %p_model_1_submodule_1_submodule_1_submodule_conv_unit0_adn_n_bias, %b_model_1_submodule_1_submodule_1_submodule_conv_unit0_adn_n_running_mean, %b_model_1_submodule_1_submodule_1_submodule_conv_unit0_adn_n_running_var, 0.1, 1e-05), kwargs = {})J‚
+pkg.torch.onnx.name_scopes√['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.1', 'model.1.submodule.1.submodule.1.submodule', 'model.1.submodule.1.submodule.1.submodule.conv', 'model.1.submodule.1.submodule.1.submodule.conv.unit0', 'model.1.submodule.1.submodule.1.submodule.conv.unit0.adn', 'model.1.submodule.1.submodule.1.submodule.conv.unit0.adn.N', '_native_batch_norm_legit_no_training_6']JÏ
+pkg.torch.onnx.stack_traceÕFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+∫
+
+getitem_18
+val_51prelu_6node_prelu_6"PReluJõ
+	namespaceç: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule.1.submodule: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.1.submodule.1.submodule.conv: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.1.submodule.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.1.submodule.1.submodule.conv.unit0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.1.submodule.1.submodule.conv.unit0.adn.A: torch.nn.modules.activation.PReLU/prelu_6: aten.prelu.defaultJŒ
+pkg.torch.onnx.class_hierarchy´['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']J—
+pkg.torch.onnx.fx_node∂%prelu_6 : [num_users=1] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem_18, %p_model_1_submodule_1_submodule_1_submodule_conv_unit0_adn_a_weight), kwargs = {})J√
+pkg.torch.onnx.name_scopes§['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.1', 'model.1.submodule.1.submodule.1.submodule', 'model.1.submodule.1.submodule.1.submodule.conv', 'model.1.submodule.1.submodule.1.submodule.conv.unit0', 'model.1.submodule.1.submodule.1.submodule.conv.unit0.adn', 'model.1.submodule.1.submodule.1.submodule.conv.unit0.adn.A', 'prelu_6']J¸
+pkg.torch.onnx.stack_trace›File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+â#
+prelu_6
+@model.1.submodule.1.submodule.1.submodule.conv.unit1.conv.weight
+>model.1.submodule.1.submodule.1.submodule.conv.unit1.conv.bias
+getitem_21node_Conv_101"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†Jﬁ
+	namespace–: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule.1.submodule: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.1.submodule.1.submodule.conv: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.1.submodule.conv.unit1: monai.networks.blocks.convolutions.Convolution/model.1.submodule.1.submodule.1.submodule.conv.unit1.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.1.submodule.1.submodule.conv.unit1.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training_7: aten._native_batch_norm_legit_no_training.defaultJ:
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvJÚ
+pkg.torch.onnx.class_hierarchyœ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']Jı
+pkg.torch.onnx.fx_node⁄%_native_batch_norm_legit_no_training_7 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv3d_11, %p_model_1_submodule_1_submodule_1_submodule_conv_unit1_adn_n_weight, %p_model_1_submodule_1_submodule_1_submodule_conv_unit1_adn_n_bias, %b_model_1_submodule_1_submodule_1_submodule_conv_unit1_adn_n_running_mean, %b_model_1_submodule_1_submodule_1_submodule_conv_unit1_adn_n_running_var, 0.1, 1e-05), kwargs = {})J‚
+pkg.torch.onnx.name_scopes√['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.1', 'model.1.submodule.1.submodule.1.submodule', 'model.1.submodule.1.submodule.1.submodule.conv', 'model.1.submodule.1.submodule.1.submodule.conv.unit1', 'model.1.submodule.1.submodule.1.submodule.conv.unit1.adn', 'model.1.submodule.1.submodule.1.submodule.conv.unit1.adn.N', '_native_batch_norm_legit_no_training_7']JÏ
+pkg.torch.onnx.stack_traceÕFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+∫
+
+getitem_21
+val_58prelu_7node_prelu_7"PReluJõ
+	namespaceç: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule.1.submodule: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.1.submodule.1.submodule.conv: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.1.submodule.conv.unit1: monai.networks.blocks.convolutions.Convolution/model.1.submodule.1.submodule.1.submodule.conv.unit1.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.1.submodule.1.submodule.conv.unit1.adn.A: torch.nn.modules.activation.PReLU/prelu_7: aten.prelu.defaultJŒ
+pkg.torch.onnx.class_hierarchy´['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']J—
+pkg.torch.onnx.fx_node∂%prelu_7 : [num_users=1] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem_21, %p_model_1_submodule_1_submodule_1_submodule_conv_unit1_adn_a_weight), kwargs = {})J√
+pkg.torch.onnx.name_scopes§['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.1', 'model.1.submodule.1.submodule.1.submodule', 'model.1.submodule.1.submodule.1.submodule.conv', 'model.1.submodule.1.submodule.1.submodule.conv.unit1', 'model.1.submodule.1.submodule.1.submodule.conv.unit1.adn', 'model.1.submodule.1.submodule.1.submodule.conv.unit1.adn.A', 'prelu_7']J¸
+pkg.torch.onnx.stack_trace›File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+Û
+prelu_7
+conv3d_9add_189node_add_189"AddJ°
+	namespaceì: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule.1.submodule: monai.networks.blocks.convolutions.ResidualUnit/add_189: aten.add.TensorJ§
+pkg.torch.onnx.class_hierarchyÅ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'monai.networks.blocks.convolutions.ResidualUnit', 'aten.add.Tensor']Jè
+pkg.torch.onnx.fx_nodeu%add_189 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%prelu_7, %conv3d_9), kwargs = {})Jﬂ
+pkg.torch.onnx.name_scopes¿['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.1', 'model.1.submodule.1.submodule.1.submodule', 'add_189']JÇ
+pkg.torch.onnx.stack_trace„File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 318, in forward
+    return cx + res  # add the residual to the output
+±
+add_140
+add_189catnode_cat"Concat*
+axis†J√
+	namespaceµ: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/cat: aten.cat.defaultJÚ
+pkg.torch.onnx.class_hierarchyœ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'aten.cat.default']Jê
+pkg.torch.onnx.fx_nodev%cat : [num_users=1] = call_function[target=torch.ops.aten.cat.default](args = ([%add_140, %add_189], 1), kwargs = {})JÆ
+pkg.torch.onnx.name_scopesè['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.1', 'cat']J˘
+pkg.torch.onnx.stack_trace⁄File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 131, in forward
+    return torch.cat([x, y], dim=self.dim)
+€
+cat
+-model.1.submodule.1.submodule.2.0.conv.weight
++model.1.submodule.1.submodule.2.0.conv.bias
+getitem_24node_ConvTranspose_102"ConvTranspose*
+kernel_shape@@@†*
+output_padding@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†JË
+	namespace⁄: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.2: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.2.0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.1.submodule.2.0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.1.submodule.2.0.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training_8: aten._native_batch_norm_legit_no_training.defaultJC
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvTransposeJä
+pkg.torch.onnx.class_hierarchyÁ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']J´
+pkg.torch.onnx.fx_nodeê%_native_batch_norm_legit_no_training_8 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%convolution, %p_model_1_submodule_1_submodule_2_0_adn_n_weight, %p_model_1_submodule_1_submodule_2_0_adn_n_bias, %b_model_1_submodule_1_submodule_2_0_adn_n_running_mean, %b_model_1_submodule_1_submodule_2_0_adn_n_running_var, 0.1, 1e-05), kwargs = {})J 
+pkg.torch.onnx.name_scopes´['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.2', 'model.1.submodule.1.submodule.2.0', 'model.1.submodule.1.submodule.2.0.adn', 'model.1.submodule.1.submodule.2.0.adn.N', '_native_batch_norm_legit_no_training_8']JÚ
+pkg.torch.onnx.stack_trace”File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  [Previous line repeated 1 more time]
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+∑
+
+getitem_24
+val_65prelu_8node_prelu_8"PReluJ•
+	namespaceó: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.2: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.2.0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.1.submodule.2.0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.1.submodule.2.0.adn.A: torch.nn.modules.activation.PReLU/prelu_8: aten.prelu.defaultJÊ
+pkg.torch.onnx.class_hierarchy√['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']Jæ
+pkg.torch.onnx.fx_node£%prelu_8 : [num_users=2] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem_24, %p_model_1_submodule_1_submodule_2_0_adn_a_weight), kwargs = {})J´
+pkg.torch.onnx.name_scopeså['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.2', 'model.1.submodule.1.submodule.2.0', 'model.1.submodule.1.submodule.2.0.adn', 'model.1.submodule.1.submodule.2.0.adn.A', 'prelu_8']JÇ	
+pkg.torch.onnx.stack_trace„File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  [Previous line repeated 1 more time]
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+È!
+prelu_8
+8model.1.submodule.1.submodule.2.1.conv.unit0.conv.weight
+6model.1.submodule.1.submodule.2.1.conv.unit0.conv.bias
+getitem_27node_Conv_103"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†J™
+	namespaceú: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.2: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.2.1: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.1.submodule.2.1.conv: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.2.1.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.1.submodule.2.1.conv.unit0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.1.submodule.2.1.conv.unit0.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training_9: aten._native_batch_norm_legit_no_training.defaultJ:
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvJÊ
+pkg.torch.onnx.class_hierarchy√['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']J’
+pkg.torch.onnx.fx_node∫%_native_batch_norm_legit_no_training_9 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv3d_12, %p_model_1_submodule_1_submodule_2_1_conv_unit0_adn_n_weight, %p_model_1_submodule_1_submodule_2_1_conv_unit0_adn_n_bias, %b_model_1_submodule_1_submodule_2_1_conv_unit0_adn_n_running_mean, %b_model_1_submodule_1_submodule_2_1_conv_unit0_adn_n_running_var, 0.1, 1e-05), kwargs = {})J∫
+pkg.torch.onnx.name_scopesõ['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.2', 'model.1.submodule.1.submodule.2.1', 'model.1.submodule.1.submodule.2.1.conv', 'model.1.submodule.1.submodule.2.1.conv.unit0', 'model.1.submodule.1.submodule.2.1.conv.unit0.adn', 'model.1.submodule.1.submodule.2.1.conv.unit0.adn.N', '_native_batch_norm_legit_no_training_9']J‰
+pkg.torch.onnx.stack_trace≈File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+¬
+
+getitem_27
+val_72prelu_9node_prelu_9"PReluJÁ
+	namespaceŸ: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.2: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.2.1: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.1.submodule.2.1.conv: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.2.1.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.1.submodule.2.1.conv.unit0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.1.submodule.2.1.conv.unit0.adn.A: torch.nn.modules.activation.PReLU/prelu_9: aten.prelu.defaultJ¬
+pkg.torch.onnx.class_hierarchyü['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']J…
+pkg.torch.onnx.fx_nodeÆ%prelu_9 : [num_users=1] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem_27, %p_model_1_submodule_1_submodule_2_1_conv_unit0_adn_a_weight), kwargs = {})Jõ
+pkg.torch.onnx.name_scopes¸['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.2', 'model.1.submodule.1.submodule.2.1', 'model.1.submodule.1.submodule.2.1.conv', 'model.1.submodule.1.submodule.2.1.conv.unit0', 'model.1.submodule.1.submodule.2.1.conv.unit0.adn', 'model.1.submodule.1.submodule.2.1.conv.unit0.adn.A', 'prelu_9']JÙ
+pkg.torch.onnx.stack_trace’File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+¡
+prelu_9
+prelu_8add_238node_add_238"AddJç
+	namespaceˇ: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.2: torch.nn.modules.container.Sequential/model.1.submodule.1.submodule.2.1: monai.networks.blocks.convolutions.ResidualUnit/add_238: aten.add.TensorJò
+pkg.torch.onnx.class_hierarchyı['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'aten.add.Tensor']Jé
+pkg.torch.onnx.fx_nodet%add_238 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%prelu_9, %prelu_8), kwargs = {})J◊
+pkg.torch.onnx.name_scopes∏['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'model.1.submodule.1.submodule', 'model.1.submodule.1.submodule.2', 'model.1.submodule.1.submodule.2.1', 'add_238']J˙
+pkg.torch.onnx.stack_trace€File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 318, in forward
+    return cx + res  # add the residual to the output
+â
+add_91
+add_238cat_1
+node_cat_1"Concat*
+axis†J≠
+	namespaceü: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.1: monai.networks.layers.simplelayers.SkipConnection/cat_1: aten.cat.defaultJî
+pkg.torch.onnx.class_hierarchyÒ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'aten.cat.default']Jë
+pkg.torch.onnx.fx_nodew%cat_1 : [num_users=1] = call_function[target=torch.ops.aten.cat.default](args = ([%add_91, %add_238], 1), kwargs = {})Jk
+pkg.torch.onnx.name_scopesM['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.1', 'cat_1']JÖ
+pkg.torch.onnx.stack_traceÊFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 131, in forward
+    return torch.cat([x, y], dim=self.dim)
+§
+cat_1
+!model.1.submodule.2.0.conv.weight
+model.1.submodule.2.0.conv.bias
+getitem_30node_ConvTranspose_104"ConvTranspose*
+kernel_shape@@@†*
+output_padding@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†J≠
+	namespaceü: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.2: torch.nn.modules.container.Sequential/model.1.submodule.2.0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.2.0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.2.0.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training_10: aten._native_batch_norm_legit_no_training.defaultJC
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvTransposeJ¨
+pkg.torch.onnx.class_hierarchyâ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']J˛
+pkg.torch.onnx.fx_node„%_native_batch_norm_legit_no_training_10 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%convolution_1, %p_model_1_submodule_2_0_adn_n_weight, %p_model_1_submodule_2_0_adn_n_bias, %b_model_1_submodule_2_0_adn_n_running_mean, %b_model_1_submodule_2_0_adn_n_running_var, 0.1, 1e-05), kwargs = {})J„
+pkg.torch.onnx.name_scopesƒ['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.2', 'model.1.submodule.2.0', 'model.1.submodule.2.0.adn', 'model.1.submodule.2.0.adn.N', '_native_batch_norm_legit_no_training_10']J˛
+pkg.torch.onnx.stack_traceﬂFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  [Previous line repeated 1 more time]
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+∫
+
+getitem_30
+val_79prelu_10node_prelu_10"PReluJÍ
+	namespace‹: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.2: torch.nn.modules.container.Sequential/model.1.submodule.2.0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.2.0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.2.0.adn.A: torch.nn.modules.activation.PReLU/prelu_10: aten.prelu.defaultJà
+pkg.torch.onnx.class_hierarchyÂ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']J≥
+pkg.torch.onnx.fx_nodeò%prelu_10 : [num_users=2] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem_30, %p_model_1_submodule_2_0_adn_a_weight), kwargs = {})Jƒ
+pkg.torch.onnx.name_scopes•['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.2', 'model.1.submodule.2.0', 'model.1.submodule.2.0.adn', 'model.1.submodule.2.0.adn.A', 'prelu_10']Jé
+pkg.torch.onnx.stack_traceÔFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  [Previous line repeated 1 more time]
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+ˇ
+prelu_10
+,model.1.submodule.2.1.conv.unit0.conv.weight
+*model.1.submodule.2.1.conv.unit0.conv.bias
+getitem_33node_Conv_105"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†J◊
+	namespace…: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.2: torch.nn.modules.container.Sequential/model.1.submodule.2.1: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.2.1.conv: torch.nn.modules.container.Sequential/model.1.submodule.2.1.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.2.1.conv.unit0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.2.1.conv.unit0.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training_11: aten._native_batch_norm_legit_no_training.defaultJ:
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvJà
+pkg.torch.onnx.class_hierarchyÂ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']J¶
+pkg.torch.onnx.fx_nodeã%_native_batch_norm_legit_no_training_11 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%conv3d_13, %p_model_1_submodule_2_1_conv_unit0_adn_n_weight, %p_model_1_submodule_2_1_conv_unit0_adn_n_bias, %b_model_1_submodule_2_1_conv_unit0_adn_n_running_mean, %b_model_1_submodule_2_1_conv_unit0_adn_n_running_var, 0.1, 1e-05), kwargs = {})Jª
+pkg.torch.onnx.name_scopesú['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.2', 'model.1.submodule.2.1', 'model.1.submodule.2.1.conv', 'model.1.submodule.2.1.conv.unit0', 'model.1.submodule.2.1.conv.unit0.adn', 'model.1.submodule.2.1.conv.unit0.adn.N', '_native_batch_norm_legit_no_training_11']J	
+pkg.torch.onnx.stack_trace—	File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+ï
+
+getitem_33
+val_86prelu_11node_prelu_11"PReluJî
+	namespaceÜ: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.2: torch.nn.modules.container.Sequential/model.1.submodule.2.1: monai.networks.blocks.convolutions.ResidualUnit/model.1.submodule.2.1.conv: torch.nn.modules.container.Sequential/model.1.submodule.2.1.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.1.submodule.2.1.conv.unit0.adn: monai.networks.blocks.acti_norm.ADN/model.1.submodule.2.1.conv.unit0.adn.A: torch.nn.modules.activation.PReLU/prelu_11: aten.prelu.defaultJ‰
+pkg.torch.onnx.class_hierarchy¡['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']Jæ
+pkg.torch.onnx.fx_node£%prelu_11 : [num_users=1] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem_33, %p_model_1_submodule_2_1_conv_unit0_adn_a_weight), kwargs = {})Jú
+pkg.torch.onnx.name_scopes˝['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.2', 'model.1.submodule.2.1', 'model.1.submodule.2.1.conv', 'model.1.submodule.2.1.conv.unit0', 'model.1.submodule.2.1.conv.unit0.adn', 'model.1.submodule.2.1.conv.unit0.adn.A', 'prelu_11']JÄ
+
+pkg.torch.onnx.stack_trace·	File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+˛
+prelu_11
+prelu_10add_287node_add_287"AddJÈ
+	namespace€: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/model.1.submodule: torch.nn.modules.container.Sequential/model.1.submodule.2: torch.nn.modules.container.Sequential/model.1.submodule.2.1: monai.networks.blocks.convolutions.ResidualUnit/add_287: aten.add.TensorJ∫
+pkg.torch.onnx.class_hierarchyó['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'aten.add.Tensor']Jê
+pkg.torch.onnx.fx_nodev%add_287 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%prelu_11, %prelu_10), kwargs = {})JÜ
+pkg.torch.onnx.name_scopesh['', 'model', 'model.1', 'model.1.submodule', 'model.1.submodule.2', 'model.1.submodule.2.1', 'add_287']JÜ
+pkg.torch.onnx.stack_traceÁFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 128, in forward
+    y = self.submodule(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 318, in forward
+    return cx + res  # add the residual to the output
+ã
+add_42
+add_287cat_2
+node_cat_2"Concat*
+axis†J≠
+	namespaceü: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.1: monai.networks.layers.simplelayers.SkipConnection/cat_2: aten.cat.defaultJ∂
+pkg.torch.onnx.class_hierarchyì['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'monai.networks.layers.simplelayers.SkipConnection', 'aten.cat.default']Jë
+pkg.torch.onnx.fx_nodew%cat_2 : [num_users=1] = call_function[target=torch.ops.aten.cat.default](args = ([%add_42, %add_287], 1), kwargs = {})J?
+pkg.torch.onnx.name_scopes!['', 'model', 'model.1', 'cat_2']Jë
+pkg.torch.onnx.stack_traceÚFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\layers\simplelayers.py", line 131, in forward
+    return torch.cat([x, y], dim=self.dim)
+ï
+cat_2
+model.2.0.conv.weight
+model.2.0.conv.bias
+getitem_36node_ConvTranspose_106"ConvTranspose*
+kernel_shape@@@†*
+output_padding@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†Jâ
+	namespace˚: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.2: torch.nn.modules.container.Sequential/model.2.0: monai.networks.blocks.convolutions.Convolution/model.2.0.adn: monai.networks.blocks.acti_norm.ADN/model.2.0.adn.N: torch.nn.modules.batchnorm.BatchNorm3d/_native_batch_norm_legit_no_training_12: aten._native_batch_norm_legit_no_training.defaultJC
+!pkg.onnxscript.rewriter.rule_nameFuseBatchNormIntoConvTransposeJŒ
+pkg.torch.onnx.class_hierarchy´['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.batchnorm.BatchNorm3d', 'aten._native_batch_norm_legit_no_training.default']JŒ
+pkg.torch.onnx.fx_node≥%_native_batch_norm_legit_no_training_12 : [num_users=1] = call_function[target=torch.ops.aten._native_batch_norm_legit_no_training.default](args = (%convolution_2, %p_model_2_0_adn_n_weight, %p_model_2_0_adn_n_bias, %b_model_2_0_adn_n_running_mean, %b_model_2_0_adn_n_running_var, 0.1, 1e-05), kwargs = {})Jí
+pkg.torch.onnx.name_scopest['', 'model', 'model.2', 'model.2.0', 'model.2.0.adn', 'model.2.0.adn.N', '_native_batch_norm_legit_no_training_12']Jä
+pkg.torch.onnx.stack_traceÎFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  [Previous line repeated 1 more time]
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\batchnorm.py", line 210, in forward
+    return F.batch_norm(
+Ê
+
+getitem_36
+val_93prelu_12node_prelu_12"PReluJ∆
+	namespace∏: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.2: torch.nn.modules.container.Sequential/model.2.0: monai.networks.blocks.convolutions.Convolution/model.2.0.adn: monai.networks.blocks.acti_norm.ADN/model.2.0.adn.A: torch.nn.modules.activation.PReLU/prelu_12: aten.prelu.defaultJ™
+pkg.torch.onnx.class_hierarchyá['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'monai.networks.blocks.acti_norm.ADN', 'torch.nn.modules.activation.PReLU', 'aten.prelu.default']Jß
+pkg.torch.onnx.fx_nodeå%prelu_12 : [num_users=2] = call_function[target=torch.ops.aten.prelu.default](args = (%getitem_36, %p_model_2_0_adn_a_weight), kwargs = {})Js
+pkg.torch.onnx.name_scopesU['', 'model', 'model.2', 'model.2.0', 'model.2.0.adn', 'model.2.0.adn.A', 'prelu_12']Jö
+pkg.torch.onnx.stack_trace˚File "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  [Previous line repeated 1 more time]
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\activation.py", line 1649, in forward
+    return F.prelu(input, self.weight)
+í
+prelu_12
+ model.2.1.conv.unit0.conv.weight
+model.2.1.conv.unit0.conv.bias	conv3d_14node_conv3d_14"Conv*
+kernel_shape@@@†*
+group†*
+auto_pad"NOTSET†*
+	dilations@@@†*
+strides@@@†*
+pads@@@@@@†Jñ
+	namespaceà: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.2: torch.nn.modules.container.Sequential/model.2.1: monai.networks.blocks.convolutions.ResidualUnit/model.2.1.conv: torch.nn.modules.container.Sequential/model.2.1.conv.unit0: monai.networks.blocks.convolutions.Convolution/model.2.1.conv.unit0.conv: torch.nn.modules.conv.Conv3d/conv3d_14: aten.conv3d.defaultJ€
+pkg.torch.onnx.class_hierarchy∏['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.Convolution', 'torch.nn.modules.conv.Conv3d', 'aten.conv3d.default']JÍ
+pkg.torch.onnx.fx_nodeœ%conv3d_14 : [num_users=1] = call_function[target=torch.ops.aten.conv3d.default](args = (%prelu_12, %p_model_2_1_conv_unit0_conv_weight, %p_model_2_1_conv_unit0_conv_bias, [1, 1, 1], [1, 1, 1]), kwargs = {})Jó
+pkg.torch.onnx.name_scopesy['', 'model', 'model.2', 'model.2.1', 'model.2.1.conv', 'model.2.1.conv.unit0', 'model.2.1.conv.unit0.conv', 'conv3d_14']J•
+pkg.torch.onnx.stack_traceÜFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 317, in forward
+    cx: torch.Tensor = self.conv(x)  # apply x to sequence of operations
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\conv.py", line 735, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+ı	
+	conv3d_14
+prelu_12output_segmentationnode_add_324"AddJ›
+	namespaceœ: monai.networks.nets.unet.UNet/model: torch.nn.modules.container.Sequential/model.2: torch.nn.modules.container.Sequential/model.2.1: monai.networks.blocks.convolutions.ResidualUnit/add_324: aten.add.TensorJ‹
+pkg.torch.onnx.class_hierarchyπ['monai.networks.nets.unet.UNet', 'torch.nn.modules.container.Sequential', 'torch.nn.modules.container.Sequential', 'monai.networks.blocks.convolutions.ResidualUnit', 'aten.add.Tensor']Jë
+pkg.torch.onnx.fx_nodew%add_324 : [num_users=1] = call_function[target=torch.ops.aten.add.Tensor](args = (%conv3d_14, %prelu_12), kwargs = {})JN
+pkg.torch.onnx.name_scopes0['', 'model', 'model.2', 'model.2.1', 'add_324']Jí
+pkg.torch.onnx.stack_traceÛFile "C:\Python313\Lib\site-packages\monai\networks\nets\unet.py", line 298, in forward
+    x = self.model(x)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\torch\nn\modules\container.py", line 259, in forward
+    input = module(input)
+  File "C:\Python313\Lib\site-packages\monai\networks\blocks\convolutions.py", line 318, in forward
+    return cx + res  # add the residual to the output
+main_graph*dBmodel.0.conv.unit0.conv.biasJ@ŒxÜ=Ut/ºå≤Ñ;<¢ΩÂÂ†º•Ræ3·4=¢A´Ω¢êé=ñ›F=ÏwB=¯Ämº\≈Ω;œ3ΩßH&Ωº.dΩ*dBmodel.0.conv.unit1.conv.biasJ@jC/?îWPæ¶¸?/ZÚ>-Â?¿ÎÌ>Ø◊ ?áìæA æÃ3?á⁄¡><®)=4˘Ê<.àç=0™˝>ËÀ\?*]Bmodel.0.residual.biasJ@ëœ=JtÁº‘–±=◊·ªÚ”ΩrΩõΩ4⁄
+=_=ƒ‡¨Ω~(¡=•ººÎcØª∞ôæΩÙnΩ¡ÊV=*± B(model.1.submodule.0.conv.unit0.conv.biasJÄwœuø4røŸ“bø™—S>&÷</W±>∏T=Æ˛Fæ§“∫æÊaìø2Òƒæ#
+¿<¡s^?~†◊æ∂"=?t
+ˆ=÷ûˇæ√˝?Üm7æDø>30?Jhææ\úæ%	òø{C≤>ÍtQæll”Ω§≥2?;v’>∏ãpæ?ëædIø*± B(model.1.submodule.0.conv.unit1.conv.biasJÄ)ÿ?éd[øMÎÍ>GÖ?Osø?7˛oΩ⁄â?§a?Ã_ü>oÎ>ÖY˝æY!&øÛ!æäôæ;r?‰?ûΩƒ≈>TÈ&øÄõ?ΩÃBø¿Øü?¢øÚ¬h>©{&>é1“>ËYøF¥øòó<û?¨{>>8˘UΩ*™ B!model.1.submodule.0.residual.biasJÄŸ¨-πt¯ÆΩ@«©<>¿<lÇHΩF;â·=@)=°z=z¯{=â[ΩÅ"=L§fºÆΩÇΩ”ÜÆ<®r=∑s;Ì'¶;mç>∫ñ(S=.ImΩ˘0¨=®˘i<Ï®<ÿ®Å=√õ=¿ÓΩª÷n.=3CIºÅ¯Ü=J“;g¢)<*Ω@B4model.1.submodule.1.submodule.0.conv.unit0.conv.biasJÄ≠„øÁ°⁄æ‰‰ΩÈøê>…# >tMæq®=m•—>\€ƒΩöj‹=ﬁHΩCa?zUπ=Ä)´ºt?:˝Ÿø6 F?0Y-ø[÷øt~¿‡Óˆøg-åøÑW≥ø„Wû>ØM{?ãÎWælˆ>ˆ|±?4uøﬂ·‹ø∏DB>tπ>
+Vó?)˙´øÊVP?ù¯∂?≥‡!>`˛µ>ìP?ÿÿ‚<\æføÇ€4æˇ[ã>Ê‡øˇX=¥6ü>h(í=Ão⁄>SŒøÃz£ø√~¿ö∑ˆæ%uæõ1?Çˆ∂øG|Òø∫$b?πv	øìGõøD∂ææ ?¸
+ëø˜K?æ*Ω@B4model.1.submodule.1.submodule.0.conv.unit1.conv.biasJÄKÅ}æ%Ç?˛®æÜ?,$†>¯D}ø£^øZH¡æ	í=>äËÙΩSùøü>0ÿÓ;¶%‹<ïà[?ç(?{im?KM,?ûìn?ƒÉ^?V≤=¬“Õæˆ{W?>%Ñ?òôëΩiTjøO?™‚!ø-ÎJøUøémøÓ…Vø É?|^y?$FÁΩ#ÿd>Ö’Ä?µ»Åø~ Üøì3øUäåøëé∑æb µ>’ÈÚ>ˆ„Ç? É?„Ì«ºµ)ø#õÛæ:ç0?ˇ°/?® k?W«(=√7æPw<?Snø ÈUøÁx)?)ˆÑ>]fyøráv?òÛ\?ôä;?4Ò∏>*∂@B-model.1.submodule.1.submodule.0.residual.biasJÄ.òËºê/<íˇª#Ω=O¸<Õ‘>;Üì…ºñí=˝*Ä<≠"><ùn/=åfΩ¢~ºæ¯=xH];Ò‰¥;Qò=‡% º˜”o=À•>=9Ç=!+ΩøXå;§S‹ªùï<(@<;ª<r˙»;L«ºkÃ<WB˚º∫∂<wÚª<ãºÙ<åe<ç(6º
+{¯ªo5Íº\€ˇº|j}:YÜ ºÛÿË<@˙Ω®∆<ÎÍ=◊BÍ<öºFÜªy¢ΩÀªç∆…ºÿô=	™-=´≤ªÜ‘ª@÷º8
++ºc=`kÆº6î@ªV2=¿€	ºAy÷:(‰Sº*åÄB>model.1.submodule.1.submodule.1.submodule.conv.unit0.conv.biasj'
+locationneuroquant_3dunet.onnx.dataj
+offset0j
+length512p*éÄB>model.1.submodule.1.submodule.1.submodule.conv.unit1.conv.biasj'
+locationneuroquant_3dunet.onnx.dataj
+offset512j
+length512p*àÄB7model.1.submodule.1.submodule.1.submodule.residual.biasj'
+locationneuroquant_3dunet.onnx.dataj
+offset1024j
+length512p*¥ B+model.1.submodule.1.submodule.2.0.conv.biasJÄˆÔô>!?¨ôäæÀ®?2•Í>„2>=üP?X±1>0õ,>$j≤º‡a?+7¿>Z#?íªæÃ≥)?s© >¡>∫+>ÕË<¥„?U˚È=Œ¢>vK>[>Ê84ΩøÙí=ÊÎ>.â∂<“a!?^˙2>(Ï>*ø B6model.1.submodule.1.submodule.2.1.conv.unit0.conv.biasJÄﬁoC>„ù∆?€f£æúHf?ÊˆÆ?ö’?ºÌ*?aM*@`ºç?…!@µø-¥˜øµ'º?˜(?‹π=í◊:@Vßr?„ŸËø∞sî?ànI?Á†≤ø•À[?2L??ïY·?ˇû˜ø6âr>∆ä?)%ñøí¡>@¥‰Û>VàY?Bx∆ø*gBmodel.1.submodule.2.0.conv.biasJ@ZcZ>TÖ=≥„¸>>Û=(;_æÍLæo‰€=ë§8>’˘ûΩÛ£ùº‚˛#?K≈=æ@În∫éÉ?@≤÷>™Ì>*rB*model.1.submodule.2.1.conv.unit0.conv.biasJ@ã%åæáf˚?ºtd?øÇ¶?ösé?°e8?¢9Ÿ>L1?-D¢>ª	≥?Î•æ8µå=VFFø–ü?˚%¨?7@*'Bmodel.2.0.conv.biasJŸR≤>¶ØΩÒ>*xB model.2.1.conv.unit0.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset1536j
+length972p*2Bmodel.2.1.conv.unit0.conv.biasJBÊ˙=˚«Åæ5⁄€º*wBmodel.0.conv.unit0.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset2508j
+length6912p*yBmodel.0.conv.unit1.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset26700j
+length27648p*pBmodel.0.residual.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset9420j
+length6912p*Ü B*model.1.submodule.0.conv.unit0.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset114764j
+length55296p*á  B*model.1.submodule.0.conv.unit1.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset225356j
+length110592p* B#model.1.submodule.0.residual.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset170060j
+length55296p*ì@ B6model.1.submodule.1.submodule.0.conv.unit0.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset557132j
+length221184p*ì@@B6model.1.submodule.1.submodule.0.conv.unit1.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset999500j
+length442368p*å@ B/model.1.submodule.1.submodule.0.residual.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset778316j
+length221184p*üÄ@B@model.1.submodule.1.submodule.1.submodule.conv.unit0.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset2105420j
+length884736p*°ÄÄB@model.1.submodule.1.submodule.1.submodule.conv.unit1.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset3014656j
+length1769472p*ïÄ@B9model.1.submodule.1.submodule.1.submodule.residual.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset81996j
+length32768p*å¿ B-model.1.submodule.1.submodule.2.0.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset1441868j
+length663552p*ï  B8model.1.submodule.1.submodule.2.1.conv.unit0.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset335948j
+length110592p*~@B!model.1.submodule.2.0.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset446540j
+length110592p*áB,model.1.submodule.2.1.conv.unit0.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset54348j
+length27648p*p Bmodel.2.0.conv.weightj'
+locationneuroquant_3dunet.onnx.dataj
+offset16332j
+length10368p*Bval_9J(–?>*Bval_16Jæ≈>*Bval_23Jâ@#>*Bval_30J|K>*Bval_37JÛ7I>*Bval_44J–>*Bval_51Jóª1>*Bval_58JÕd>*Bval_65J`	Ú=*Bval_72J¡C>*Bval_79J8£“=*Bval_86JEÿô>*Bval_93J¿è-=Z⁄
+	input_mri'
+%!
+
+batch_size
+
+Ä
+Ä
+Ä"=
+/pkg.torch.export.graph_signature.InputSpec.kind
+USER_INPUT"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"&
+!pkg.torch.onnx.original_node_namexb≠
+output_segmentation'
+%!
+
+batch_size
+
+Ä
+Ä
+Ä"?
+0pkg.torch.export.graph_signature.OutputSpec.kindUSER_OUTPUT",
+!pkg.torch.onnx.original_node_nameadd_324j*
+model.0.conv.unit0.conv.bias
+
+
+j*
+model.0.conv.unit1.conv.bias
+
+
+jﬁ
+model.0.residual.bias
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"<
+!pkg.torch.onnx.original_node_namep_model_0_residual_biasj6
+(model.1.submodule.0.conv.unit0.conv.bias
+
+
+ j6
+(model.1.submodule.0.conv.unit1.conv.bias
+
+
+ jˆ
+!model.1.submodule.0.residual.bias
+
+
+ "<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"H
+!pkg.torch.onnx.original_node_name#p_model_1_submodule_0_residual_biasjB
+4model.1.submodule.1.submodule.0.conv.unit0.conv.bias
+
+
+@jB
+4model.1.submodule.1.submodule.0.conv.unit1.conv.bias
+
+
+@jé
+-model.1.submodule.1.submodule.0.residual.bias
+
+
+@"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"T
+!pkg.torch.onnx.original_node_name/p_model_1_submodule_1_submodule_0_residual_biasjM
+>model.1.submodule.1.submodule.1.submodule.conv.unit0.conv.bias
+	
+ÄjM
+>model.1.submodule.1.submodule.1.submodule.conv.unit1.conv.bias
+	
+Äj£
+7model.1.submodule.1.submodule.1.submodule.residual.bias
+	
+Ä"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"^
+!pkg.torch.onnx.original_node_name9p_model_1_submodule_1_submodule_1_submodule_residual_biasj9
++model.1.submodule.1.submodule.2.0.conv.bias
+
+
+ jD
+6model.1.submodule.1.submodule.2.1.conv.unit0.conv.bias
+
+
+ j-
+model.1.submodule.2.0.conv.bias
+
+
+j8
+*model.1.submodule.2.1.conv.unit0.conv.bias
+
+
+j!
+model.2.0.conv.bias
+
+
+jÑ
+ model.2.1.conv.unit0.conv.weight
+
+
+
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"G
+!pkg.torch.onnx.original_node_name"p_model_2_1_conv_unit0_conv_weightj
+model.2.1.conv.unit0.conv.bias
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"E
+!pkg.torch.onnx.original_node_name p_model_2_1_conv_unit0_conv_biasj<
+model.0.conv.unit0.conv.weight
+
+
+
+
+
+j<
+model.0.conv.unit1.conv.weight
+
+
+
+
+
+jÚ
+model.0.residual.weight
+
+
+
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone">
+!pkg.torch.onnx.original_node_namep_model_0_residual_weightjH
+*model.1.submodule.0.conv.unit0.conv.weight
+
+ 
+
+
+
+jH
+*model.1.submodule.0.conv.unit1.conv.weight
+
+ 
+ 
+
+
+jä
+#model.1.submodule.0.residual.weight
+
+ 
+
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"J
+!pkg.torch.onnx.original_node_name%p_model_1_submodule_0_residual_weightjT
+6model.1.submodule.1.submodule.0.conv.unit0.conv.weight
+
+@
+ 
+
+
+jT
+6model.1.submodule.1.submodule.0.conv.unit1.conv.weight
+
+@
+@
+
+
+j¢
+/model.1.submodule.1.submodule.0.residual.weight
+
+@
+ 
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"V
+!pkg.torch.onnx.original_node_name1p_model_1_submodule_1_submodule_0_residual_weightj_
+@model.1.submodule.1.submodule.1.submodule.conv.unit0.conv.weight
+
+Ä
+@
+
+
+j`
+@model.1.submodule.1.submodule.1.submodule.conv.unit1.conv.weight
+
+Ä
+Ä
+
+
+j∑
+9model.1.submodule.1.submodule.1.submodule.residual.weight
+
+Ä
+@
+
+
+"<
+/pkg.torch.export.graph_signature.InputSpec.kind	PARAMETER"=
+5pkg.torch.export.graph_signature.InputSpec.persistentNone"`
+!pkg.torch.onnx.original_node_name;p_model_1_submodule_1_submodule_1_submodule_residual_weightjL
+-model.1.submodule.1.submodule.2.0.conv.weight
+
+¿
+ 
+
+
+jV
+8model.1.submodule.1.submodule.2.1.conv.unit0.conv.weight
+
+ 
+ 
+
+
+j?
+!model.1.submodule.2.0.conv.weight
+
+@
+
+
+
+jJ
+,model.1.submodule.2.1.conv.unit0.conv.weight
+
+
+
+
+
+j3
+model.2.0.conv.weight
+
+ 
+
+
+
+jy
+val_9
+
+
+
+
+
+"T
+$pkg.onnxscript.optimizer.folded_from,['model.0.conv.unit0.adn.A.weight', 'val_8']jz
+val_16
+
+
+
+
+
+"T
+$pkg.onnxscript.optimizer.folded_from,['model.0.conv.unit1.adn.A.weight', 'val_8']jÜ
+val_23
+
+
+
+
+
+"`
+$pkg.onnxscript.optimizer.folded_from8['model.1.submodule.0.conv.unit0.adn.A.weight', 'val_8']jÜ
+val_30
+
+
+
+
+
+"`
+$pkg.onnxscript.optimizer.folded_from8['model.1.submodule.0.conv.unit1.adn.A.weight', 'val_8']jí
+val_37
+
+
+
+
+
+"l
+$pkg.onnxscript.optimizer.folded_fromD['model.1.submodule.1.submodule.0.conv.unit0.adn.A.weight', 'val_8']jí
+val_44
+
+
+
+
+
+"l
+$pkg.onnxscript.optimizer.folded_fromD['model.1.submodule.1.submodule.0.conv.unit1.adn.A.weight', 'val_8']jú
+val_51
+
+
+
+
+
+"v
+$pkg.onnxscript.optimizer.folded_fromN['model.1.submodule.1.submodule.1.submodule.conv.unit0.adn.A.weight', 'val_8']jú
+val_58
+
+
+
+
+
+"v
+$pkg.onnxscript.optimizer.folded_fromN['model.1.submodule.1.submodule.1.submodule.conv.unit1.adn.A.weight', 'val_8']jâ
+val_65
+
+
+
+
+
+"c
+$pkg.onnxscript.optimizer.folded_from;['model.1.submodule.1.submodule.2.0.adn.A.weight', 'val_8']jî
+val_72
+
+
+
+
+
+"n
+$pkg.onnxscript.optimizer.folded_fromF['model.1.submodule.1.submodule.2.1.conv.unit0.adn.A.weight', 'val_8']j}
+val_79
+
+
+
+
+
+"W
+$pkg.onnxscript.optimizer.folded_from/['model.1.submodule.2.0.adn.A.weight', 'val_8']jà
+val_86
+
+
+
+
+
+"b
+$pkg.onnxscript.optimizer.folded_from:['model.1.submodule.2.1.conv.unit0.adn.A.weight', 'val_8']jq
+val_93
+
+
+
+
+
+"K
+$pkg.onnxscript.optimizer.folded_from#['model.2.0.adn.A.weight', 'val_8']j.
+conv3d$
+"
+
+batch_size
+
+@
+@
+@j/
+getitem$
+"
+
+batch_size
+
+@
+@
+@j-
+prelu$
+"
+
+batch_size
+
+@
+@
+@j1
+	getitem_3$
+"
+
+batch_size
+
+@
+@
+@j/
+prelu_1$
+"
+
+batch_size
+
+@
+@
+@j.
+add_42$
+"
+
+batch_size
+
+@
+@
+@j0
+conv3d_3$
+"
+
+batch_size
+ 
+ 
+ 
+ j1
+	getitem_6$
+"
+
+batch_size
+ 
+ 
+ 
+ j/
+prelu_2$
+"
+
+batch_size
+ 
+ 
+ 
+ j1
+	getitem_9$
+"
+
+batch_size
+ 
+ 
+ 
+ j/
+prelu_3$
+"
+
+batch_size
+ 
+ 
+ 
+ j.
+add_91$
+"
+
+batch_size
+ 
+ 
+ 
+ j0
+conv3d_6$
+"
+
+batch_size
+@
+
+
+j2
+
+getitem_12$
+"
+
+batch_size
+@
+
+
+j/
+prelu_4$
+"
+
+batch_size
+@
+
+
+j2
+
+getitem_15$
+"
+
+batch_size
+@
+
+
+j/
+prelu_5$
+"
+
+batch_size
+@
+
+
+j/
+add_140$
+"
+
+batch_size
+@
+
+
+j1
+conv3d_9%
+#
+
+batch_size
+Ä
+
+
+j3
+
+getitem_18%
+#
+
+batch_size
+Ä
+
+
+j0
+prelu_6%
+#
+
+batch_size
+Ä
+
+
+j3
+
+getitem_21%
+#
+
+batch_size
+Ä
+
+
+j0
+prelu_7%
+#
+
+batch_size
+Ä
+
+
+j0
+add_189%
+#
+
+batch_size
+Ä
+
+
+j,
+cat%
+#
+
+batch_size
+¿
+
+
+j2
+
+getitem_24$
+"
+
+batch_size
+ 
+ 
+ 
+ j/
+prelu_8$
+"
+
+batch_size
+ 
+ 
+ 
+ j2
+
+getitem_27$
+"
+
+batch_size
+ 
+ 
+ 
+ j/
+prelu_9$
+"
+
+batch_size
+ 
+ 
+ 
+ j/
+add_238$
+"
+
+batch_size
+ 
+ 
+ 
+ j-
+cat_1$
+"
+
+batch_size
+@
+ 
+ 
+ j2
+
+getitem_30$
+"
+
+batch_size
+
+@
+@
+@j0
+prelu_10$
+"
+
+batch_size
+
+@
+@
+@j2
+
+getitem_33$
+"
+
+batch_size
+
+@
+@
+@j0
+prelu_11$
+"
+
+batch_size
+
+@
+@
+@j/
+add_287$
+"
+
+batch_size
+
+@
+@
+@j-
+cat_2$
+"
+
+batch_size
+ 
+@
+@
+@j5
+
+getitem_36'
+%!
+
+batch_size
+
+Ä
+Ä
+Äj3
+prelu_12'
+%!
+
+batch_size
+
+Ä
+Ä
+Äj4
+	conv3d_14'
+%!
+
+batch_size
+
+Ä
+Ä
+ÄÇ‡m
+0pkg.torch.export.ExportedProgram.graph_signature´m
+# inputs
+p_model_0_conv_unit0_conv_weight: PARAMETER target='model.0.conv.unit0.conv.weight'
+p_model_0_conv_unit0_conv_bias: PARAMETER target='model.0.conv.unit0.conv.bias'
+p_model_0_conv_unit0_adn_n_weight: PARAMETER target='model.0.conv.unit0.adn.N.weight'
+p_model_0_conv_unit0_adn_n_bias: PARAMETER target='model.0.conv.unit0.adn.N.bias'
+p_model_0_conv_unit0_adn_a_weight: PARAMETER target='model.0.conv.unit0.adn.A.weight'
+p_model_0_conv_unit1_conv_weight: PARAMETER target='model.0.conv.unit1.conv.weight'
+p_model_0_conv_unit1_conv_bias: PARAMETER target='model.0.conv.unit1.conv.bias'
+p_model_0_conv_unit1_adn_n_weight: PARAMETER target='model.0.conv.unit1.adn.N.weight'
+p_model_0_conv_unit1_adn_n_bias: PARAMETER target='model.0.conv.unit1.adn.N.bias'
+p_model_0_conv_unit1_adn_a_weight: PARAMETER target='model.0.conv.unit1.adn.A.weight'
+p_model_0_residual_weight: PARAMETER target='model.0.residual.weight'
+p_model_0_residual_bias: PARAMETER target='model.0.residual.bias'
+p_model_1_submodule_0_conv_unit0_conv_weight: PARAMETER target='model.1.submodule.0.conv.unit0.conv.weight'
+p_model_1_submodule_0_conv_unit0_conv_bias: PARAMETER target='model.1.submodule.0.conv.unit0.conv.bias'
+p_model_1_submodule_0_conv_unit0_adn_n_weight: PARAMETER target='model.1.submodule.0.conv.unit0.adn.N.weight'
+p_model_1_submodule_0_conv_unit0_adn_n_bias: PARAMETER target='model.1.submodule.0.conv.unit0.adn.N.bias'
+p_model_1_submodule_0_conv_unit0_adn_a_weight: PARAMETER target='model.1.submodule.0.conv.unit0.adn.A.weight'
+p_model_1_submodule_0_conv_unit1_conv_weight: PARAMETER target='model.1.submodule.0.conv.unit1.conv.weight'
+p_model_1_submodule_0_conv_unit1_conv_bias: PARAMETER target='model.1.submodule.0.conv.unit1.conv.bias'
+p_model_1_submodule_0_conv_unit1_adn_n_weight: PARAMETER target='model.1.submodule.0.conv.unit1.adn.N.weight'
+p_model_1_submodule_0_conv_unit1_adn_n_bias: PARAMETER target='model.1.submodule.0.conv.unit1.adn.N.bias'
+p_model_1_submodule_0_conv_unit1_adn_a_weight: PARAMETER target='model.1.submodule.0.conv.unit1.adn.A.weight'
+p_model_1_submodule_0_residual_weight: PARAMETER target='model.1.submodule.0.residual.weight'
+p_model_1_submodule_0_residual_bias: PARAMETER target='model.1.submodule.0.residual.bias'
+p_model_1_submodule_1_submodule_0_conv_unit0_conv_weight: PARAMETER target='model.1.submodule.1.submodule.0.conv.unit0.conv.weight'
+p_model_1_submodule_1_submodule_0_conv_unit0_conv_bias: PARAMETER target='model.1.submodule.1.submodule.0.conv.unit0.conv.bias'
+p_model_1_submodule_1_submodule_0_conv_unit0_adn_n_weight: PARAMETER target='model.1.submodule.1.submodule.0.conv.unit0.adn.N.weight'
+p_model_1_submodule_1_submodule_0_conv_unit0_adn_n_bias: PARAMETER target='model.1.submodule.1.submodule.0.conv.unit0.adn.N.bias'
+p_model_1_submodule_1_submodule_0_conv_unit0_adn_a_weight: PARAMETER target='model.1.submodule.1.submodule.0.conv.unit0.adn.A.weight'
+p_model_1_submodule_1_submodule_0_conv_unit1_conv_weight: PARAMETER target='model.1.submodule.1.submodule.0.conv.unit1.conv.weight'
+p_model_1_submodule_1_submodule_0_conv_unit1_conv_bias: PARAMETER target='model.1.submodule.1.submodule.0.conv.unit1.conv.bias'
+p_model_1_submodule_1_submodule_0_conv_unit1_adn_n_weight: PARAMETER target='model.1.submodule.1.submodule.0.conv.unit1.adn.N.weight'
+p_model_1_submodule_1_submodule_0_conv_unit1_adn_n_bias: PARAMETER target='model.1.submodule.1.submodule.0.conv.unit1.adn.N.bias'
+p_model_1_submodule_1_submodule_0_conv_unit1_adn_a_weight: PARAMETER target='model.1.submodule.1.submodule.0.conv.unit1.adn.A.weight'
+p_model_1_submodule_1_submodule_0_residual_weight: PARAMETER target='model.1.submodule.1.submodule.0.residual.weight'
+p_model_1_submodule_1_submodule_0_residual_bias: PARAMETER target='model.1.submodule.1.submodule.0.residual.bias'
+p_model_1_submodule_1_submodule_1_submodule_conv_unit0_conv_weight: PARAMETER target='model.1.submodule.1.submodule.1.submodule.conv.unit0.conv.weight'
+p_model_1_submodule_1_submodule_1_submodule_conv_unit0_conv_bias: PARAMETER target='model.1.submodule.1.submodule.1.submodule.conv.unit0.conv.bias'
+p_model_1_submodule_1_submodule_1_submodule_conv_unit0_adn_n_weight: PARAMETER target='model.1.submodule.1.submodule.1.submodule.conv.unit0.adn.N.weight'
+p_model_1_submodule_1_submodule_1_submodule_conv_unit0_adn_n_bias: PARAMETER target='model.1.submodule.1.submodule.1.submodule.conv.unit0.adn.N.bias'
+p_model_1_submodule_1_submodule_1_submodule_conv_unit0_adn_a_weight: PARAMETER target='model.1.submodule.1.submodule.1.submodule.conv.unit0.adn.A.weight'
+p_model_1_submodule_1_submodule_1_submodule_conv_unit1_conv_weight: PARAMETER target='model.1.submodule.1.submodule.1.submodule.conv.unit1.conv.weight'
+p_model_1_submodule_1_submodule_1_submodule_conv_unit1_conv_bias: PARAMETER target='model.1.submodule.1.submodule.1.submodule.conv.unit1.conv.bias'
+p_model_1_submodule_1_submodule_1_submodule_conv_unit1_adn_n_weight: PARAMETER target='model.1.submodule.1.submodule.1.submodule.conv.unit1.adn.N.weight'
+p_model_1_submodule_1_submodule_1_submodule_conv_unit1_adn_n_bias: PARAMETER target='model.1.submodule.1.submodule.1.submodule.conv.unit1.adn.N.bias'
+p_model_1_submodule_1_submodule_1_submodule_conv_unit1_adn_a_weight: PARAMETER target='model.1.submodule.1.submodule.1.submodule.conv.unit1.adn.A.weight'
+p_model_1_submodule_1_submodule_1_submodule_residual_weight: PARAMETER target='model.1.submodule.1.submodule.1.submodule.residual.weight'
+p_model_1_submodule_1_submodule_1_submodule_residual_bias: PARAMETER target='model.1.submodule.1.submodule.1.submodule.residual.bias'
+p_model_1_submodule_1_submodule_2_0_conv_weight: PARAMETER target='model.1.submodule.1.submodule.2.0.conv.weight'
+p_model_1_submodule_1_submodule_2_0_conv_bias: PARAMETER target='model.1.submodule.1.submodule.2.0.conv.bias'
+p_model_1_submodule_1_submodule_2_0_adn_n_weight: PARAMETER target='model.1.submodule.1.submodule.2.0.adn.N.weight'
+p_model_1_submodule_1_submodule_2_0_adn_n_bias: PARAMETER target='model.1.submodule.1.submodule.2.0.adn.N.bias'
+p_model_1_submodule_1_submodule_2_0_adn_a_weight: PARAMETER target='model.1.submodule.1.submodule.2.0.adn.A.weight'
+p_model_1_submodule_1_submodule_2_1_conv_unit0_conv_weight: PARAMETER target='model.1.submodule.1.submodule.2.1.conv.unit0.conv.weight'
+p_model_1_submodule_1_submodule_2_1_conv_unit0_conv_bias: PARAMETER target='model.1.submodule.1.submodule.2.1.conv.unit0.conv.bias'
+p_model_1_submodule_1_submodule_2_1_conv_unit0_adn_n_weight: PARAMETER target='model.1.submodule.1.submodule.2.1.conv.unit0.adn.N.weight'
+p_model_1_submodule_1_submodule_2_1_conv_unit0_adn_n_bias: PARAMETER target='model.1.submodule.1.submodule.2.1.conv.unit0.adn.N.bias'
+p_model_1_submodule_1_submodule_2_1_conv_unit0_adn_a_weight: PARAMETER target='model.1.submodule.1.submodule.2.1.conv.unit0.adn.A.weight'
+p_model_1_submodule_2_0_conv_weight: PARAMETER target='model.1.submodule.2.0.conv.weight'
+p_model_1_submodule_2_0_conv_bias: PARAMETER target='model.1.submodule.2.0.conv.bias'
+p_model_1_submodule_2_0_adn_n_weight: PARAMETER target='model.1.submodule.2.0.adn.N.weight'
+p_model_1_submodule_2_0_adn_n_bias: PARAMETER target='model.1.submodule.2.0.adn.N.bias'
+p_model_1_submodule_2_0_adn_a_weight: PARAMETER target='model.1.submodule.2.0.adn.A.weight'
+p_model_1_submodule_2_1_conv_unit0_conv_weight: PARAMETER target='model.1.submodule.2.1.conv.unit0.conv.weight'
+p_model_1_submodule_2_1_conv_unit0_conv_bias: PARAMETER target='model.1.submodule.2.1.conv.unit0.conv.bias'
+p_model_1_submodule_2_1_conv_unit0_adn_n_weight: PARAMETER target='model.1.submodule.2.1.conv.unit0.adn.N.weight'
+p_model_1_submodule_2_1_conv_unit0_adn_n_bias: PARAMETER target='model.1.submodule.2.1.conv.unit0.adn.N.bias'
+p_model_1_submodule_2_1_conv_unit0_adn_a_weight: PARAMETER target='model.1.submodule.2.1.conv.unit0.adn.A.weight'
+p_model_2_0_conv_weight: PARAMETER target='model.2.0.conv.weight'
+p_model_2_0_conv_bias: PARAMETER target='model.2.0.conv.bias'
+p_model_2_0_adn_n_weight: PARAMETER target='model.2.0.adn.N.weight'
+p_model_2_0_adn_n_bias: PARAMETER target='model.2.0.adn.N.bias'
+p_model_2_0_adn_a_weight: PARAMETER target='model.2.0.adn.A.weight'
+p_model_2_1_conv_unit0_conv_weight: PARAMETER target='model.2.1.conv.unit0.conv.weight'
+p_model_2_1_conv_unit0_conv_bias: PARAMETER target='model.2.1.conv.unit0.conv.bias'
+b_model_0_conv_unit0_adn_n_running_mean: BUFFER target='model.0.conv.unit0.adn.N.running_mean' persistent=True
+b_model_0_conv_unit0_adn_n_running_var: BUFFER target='model.0.conv.unit0.adn.N.running_var' persistent=True
+b_model_0_conv_unit0_adn_n_num_batches_tracked: BUFFER target='model.0.conv.unit0.adn.N.num_batches_tracked' persistent=True
+b_model_0_conv_unit1_adn_n_running_mean: BUFFER target='model.0.conv.unit1.adn.N.running_mean' persistent=True
+b_model_0_conv_unit1_adn_n_running_var: BUFFER target='model.0.conv.unit1.adn.N.running_var' persistent=True
+b_model_0_conv_unit1_adn_n_num_batches_tracked: BUFFER target='model.0.conv.unit1.adn.N.num_batches_tracked' persistent=True
+b_model_1_submodule_0_conv_unit0_adn_n_running_mean: BUFFER target='model.1.submodule.0.conv.unit0.adn.N.running_mean' persistent=True
+b_model_1_submodule_0_conv_unit0_adn_n_running_var: BUFFER target='model.1.submodule.0.conv.unit0.adn.N.running_var' persistent=True
+b_model_1_submodule_0_conv_unit0_adn_n_num_batches_tracked: BUFFER target='model.1.submodule.0.conv.unit0.adn.N.num_batches_tracked' persistent=True
+b_model_1_submodule_0_conv_unit1_adn_n_running_mean: BUFFER target='model.1.submodule.0.conv.unit1.adn.N.running_mean' persistent=True
+b_model_1_submodule_0_conv_unit1_adn_n_running_var: BUFFER target='model.1.submodule.0.conv.unit1.adn.N.running_var' persistent=True
+b_model_1_submodule_0_conv_unit1_adn_n_num_batches_tracked: BUFFER target='model.1.submodule.0.conv.unit1.adn.N.num_batches_tracked' persistent=True
+b_model_1_submodule_1_submodule_0_conv_unit0_adn_n_running_mean: BUFFER target='model.1.submodule.1.submodule.0.conv.unit0.adn.N.running_mean' persistent=True
+b_model_1_submodule_1_submodule_0_conv_unit0_adn_n_running_var: BUFFER target='model.1.submodule.1.submodule.0.conv.unit0.adn.N.running_var' persistent=True
+b_model_1_submodule_1_submodule_0_conv_unit0_adn_n_num_batches_tracked: BUFFER target='model.1.submodule.1.submodule.0.conv.unit0.adn.N.num_batches_tracked' persistent=True
+b_model_1_submodule_1_submodule_0_conv_unit1_adn_n_running_mean: BUFFER target='model.1.submodule.1.submodule.0.conv.unit1.adn.N.running_mean' persistent=True
+b_model_1_submodule_1_submodule_0_conv_unit1_adn_n_running_var: BUFFER target='model.1.submodule.1.submodule.0.conv.unit1.adn.N.running_var' persistent=True
+b_model_1_submodule_1_submodule_0_conv_unit1_adn_n_num_batches_tracked: BUFFER target='model.1.submodule.1.submodule.0.conv.unit1.adn.N.num_batches_tracked' persistent=True
+b_model_1_submodule_1_submodule_1_submodule_conv_unit0_adn_n_running_mean: BUFFER target='model.1.submodule.1.submodule.1.submodule.conv.unit0.adn.N.running_mean' persistent=True
+b_model_1_submodule_1_submodule_1_submodule_conv_unit0_adn_n_running_var: BUFFER target='model.1.submodule.1.submodule.1.submodule.conv.unit0.adn.N.running_var' persistent=True
+b_model_1_submodule_1_submodule_1_submodule_conv_unit0_adn_n_num_batches_tracked: BUFFER target='model.1.submodule.1.submodule.1.submodule.conv.unit0.adn.N.num_batches_tracked' persistent=True
+b_model_1_submodule_1_submodule_1_submodule_conv_unit1_adn_n_running_mean: BUFFER target='model.1.submodule.1.submodule.1.submodule.conv.unit1.adn.N.running_mean' persistent=True
+b_model_1_submodule_1_submodule_1_submodule_conv_unit1_adn_n_running_var: BUFFER target='model.1.submodule.1.submodule.1.submodule.conv.unit1.adn.N.running_var' persistent=True
+b_model_1_submodule_1_submodule_1_submodule_conv_unit1_adn_n_num_batches_tracked: BUFFER target='model.1.submodule.1.submodule.1.submodule.conv.unit1.adn.N.num_batches_tracked' persistent=True
+b_model_1_submodule_1_submodule_2_0_adn_n_running_mean: BUFFER target='model.1.submodule.1.submodule.2.0.adn.N.running_mean' persistent=True
+b_model_1_submodule_1_submodule_2_0_adn_n_running_var: BUFFER target='model.1.submodule.1.submodule.2.0.adn.N.running_var' persistent=True
+b_model_1_submodule_1_submodule_2_0_adn_n_num_batches_tracked: BUFFER target='model.1.submodule.1.submodule.2.0.adn.N.num_batches_tracked' persistent=True
+b_model_1_submodule_1_submodule_2_1_conv_unit0_adn_n_running_mean: BUFFER target='model.1.submodule.1.submodule.2.1.conv.unit0.adn.N.running_mean' persistent=True
+b_model_1_submodule_1_submodule_2_1_conv_unit0_adn_n_running_var: BUFFER target='model.1.submodule.1.submodule.2.1.conv.unit0.adn.N.running_var' persistent=True
+b_model_1_submodule_1_submodule_2_1_conv_unit0_adn_n_num_batches_tracked: BUFFER target='model.1.submodule.1.submodule.2.1.conv.unit0.adn.N.num_batches_tracked' persistent=True
+b_model_1_submodule_2_0_adn_n_running_mean: BUFFER target='model.1.submodule.2.0.adn.N.running_mean' persistent=True
+b_model_1_submodule_2_0_adn_n_running_var: BUFFER target='model.1.submodule.2.0.adn.N.running_var' persistent=True
+b_model_1_submodule_2_0_adn_n_num_batches_tracked: BUFFER target='model.1.submodule.2.0.adn.N.num_batches_tracked' persistent=True
+b_model_1_submodule_2_1_conv_unit0_adn_n_running_mean: BUFFER target='model.1.submodule.2.1.conv.unit0.adn.N.running_mean' persistent=True
+b_model_1_submodule_2_1_conv_unit0_adn_n_running_var: BUFFER target='model.1.submodule.2.1.conv.unit0.adn.N.running_var' persistent=True
+b_model_1_submodule_2_1_conv_unit0_adn_n_num_batches_tracked: BUFFER target='model.1.submodule.2.1.conv.unit0.adn.N.num_batches_tracked' persistent=True
+b_model_2_0_adn_n_running_mean: BUFFER target='model.2.0.adn.N.running_mean' persistent=True
+b_model_2_0_adn_n_running_var: BUFFER target='model.2.0.adn.N.running_var' persistent=True
+b_model_2_0_adn_n_num_batches_tracked: BUFFER target='model.2.0.adn.N.num_batches_tracked' persistent=True
+x: USER_INPUT
+
+# outputs
+add_324: USER_OUTPUT
+ÇJ
+2pkg.torch.export.ExportedProgram.range_constraints{s77: VR[0, int_oo]}B
+ 

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="100" viewBox="0 0 420 100" fill="none">
+  <defs>
+    <radialGradient id="brain" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(330 48) rotate(90) scale(45 72)">
+      <stop stop-color="#A78BFA" stop-opacity=".32"/><stop offset="1" stop-color="#22D3EE" stop-opacity=".02"/>
+    </radialGradient>
+  </defs>
+  <path d="M0 72c59 12 82-45 139-39 54 6 63 51 116 42s85-36 165-19v44H0V72Z" fill="url(#brain)"/>
+  <path d="M14 61c45 14 67-28 108-28 47 0 59 39 104 39 48 0 65-31 111-31 29 0 45 11 69 13" stroke="#818CF8" stroke-opacity=".53" stroke-width="2"/>
+  <path d="M27 80c37 3 56-17 91-17s56 20 91 20 55-17 91-17 62 15 106 10" stroke="#67E8F9" stroke-opacity=".44" stroke-width="2"/>
+  <circle cx="334" cy="48" r="31" fill="url(#brain)" stroke="#67E8F9" stroke-opacity=".85" stroke-width="2"/>
+  <path d="M334 23c-10-12-29-6-29 7-13 3-17 19-9 27-9 12-1 27 12 28 3 15 20 18 29 9 9 9 26 6 29-9 13-1 21-16 12-28 8-8 4-24-9-27 0-13-19-19-29-7-1 2-4 2-6 0Z" stroke="#BAE6FD" stroke-width="2"/>
+  <path d="M334 24v69m-31-59c13 4 17 15 10 23m-18 6c13-4 21 4 17 14m43-43c-13 4-17 15-10 23m18 6c-13-4-21 4-17 14" stroke="#38BDF8" stroke-opacity=".8" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="54" cy="24" r="3" fill="#22D3EE"/><circle cx="78" cy="83" r="2" fill="#A78BFA"/><circle cx="128" cy="24" r="2.5" fill="#67E8F9"/>
+</svg>

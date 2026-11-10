@@ -1,0 +1,4 @@
+[functions.neuro-folder-service]
+# This function verifies desktop/mobile passwords itself. Do not let the
+# platform's Supabase JWT check reject the unauthenticated app request first.
+verify_jwt = false

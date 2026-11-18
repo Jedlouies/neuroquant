@@ -26,8 +26,22 @@ function getServiceAccount(): any {
 
 function getSupabaseClient(): any {
   if (supabaseClient) return supabaseClient;
-  const serviceKey = Deno.env.get("NEUROQUANT_SUPABASE_SERVICE_ROLE_KEY");
-  if (!serviceKey) fail(500, "configuration", "Set NEUROQUANT_SUPABASE_SERVICE_ROLE_KEY in Supabase Edge Function secrets.");
+  // Supabase injects project keys into hosted Edge Functions. Prefer the
+  // built-in secret key so Storage calls run as service_role and bypass RLS.
+  // Keep the custom variable as a fallback for older deployments.
+  let serviceKey = "";
+  const secretKeysJson = Deno.env.get("SUPABASE_SECRET_KEYS");
+  if (secretKeysJson) {
+    try {
+      const secretKeys = JSON.parse(secretKeysJson);
+      serviceKey = secretKeys?.default || Object.values(secretKeys || {}).find((value) => typeof value === "string") || "";
+    } catch {
+      console.error("Supabase injected secret-key map is not valid JSON.");
+    }
+  }
+  serviceKey = serviceKey || Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || Deno.env.get("NEUROQUANT_SUPABASE_SERVICE_ROLE_KEY") || "";
+  if (!serviceKey) fail(500, "configuration", "No Supabase server secret key is available to the folder service.");
+  console.info("Initializing privileged Supabase Storage client using the Edge Function server key.");
   supabaseClient = createClient(
     Deno.env.get("SUPABASE_URL") || "https://rgvieraaviomiovcqyyu.supabase.co",
     serviceKey,
@@ -307,8 +321,15 @@ async function createDesktopUploadUrl(input: any) {
   const objectPath = `segmentation_gifs/${username}/${folderName}/${fileName}`;
   const { data, error } = await getSupabaseClient().storage.from("neuro").createSignedUploadUrl(objectPath, { upsert: true });
   if (error || !data?.signedUrl) {
-    console.error("Could not create Supabase upload URL", error?.message);
-    fail(502, "storage", "Could not prepare the GIF upload to the Supabase neuro bucket.");
+    const reason = error?.message || "Supabase returned no signed URL.";
+    console.error("Could not create Supabase upload URL", {
+      message: reason,
+      status: error?.statusCode || error?.status || null,
+      code: error?.error || error?.code || null,
+      bucket: "neuro",
+      objectPath,
+    });
+    fail(502, "storage", `Could not prepare GIF upload in bucket 'neuro': ${reason}`);
   }
   const signedUrl = data.signedUrl.startsWith("http")
     ? data.signedUrl
@@ -316,8 +337,95 @@ async function createDesktopUploadUrl(input: any) {
   return { signedUrl, objectPath, bucket: "neuro", name: fileName, expiresInSeconds: 120 };
 }
 
+async function createAIChatUploadUrl(input: any) {
+  const username = typeof input.username === "string" ? input.username.trim() : "";
+  const password = typeof input.password === "string" ? input.password : "";
+  const sessionId = typeof input.sessionId === "string" ? input.sessionId : "";
+  const attachmentId = typeof input.attachmentId === "string" ? input.attachmentId : "";
+  const fileName = typeof input.fileName === "string" ? input.fileName : "";
+  if (!/^[a-zA-Z0-9_-]{1,128}$/.test(username) || !password || password.length > 1024 ||
+      !/^[a-zA-Z0-9_-]{1,128}$/.test(sessionId) || !/^[a-f0-9]{16,64}$/i.test(attachmentId) ||
+      !fileName || fileName.length > 500 || /[\\/\u0000-\u001f]/.test(fileName) || fileName === "." || fileName === "..") {
+    fail(400, "invalid-argument", "Invalid AI attachment details.");
+  }
+  if (!await readCloudAccount(username, password)) {
+    fail(401, "unauthenticated", "Could not verify the signed-in account for AI image backup.");
+  }
+  const userHash = await folderDocumentId(username);
+  const safeName = fileName.replace(/[^a-zA-Z0-9_.-]+/g, "_").slice(0, 120) || "image";
+  const objectPath = `ai_chat_attachments/${userHash}/${sessionId}/${attachmentId}_${safeName}`;
+  const { data, error } = await getSupabaseClient().storage.from("neuro").createSignedUploadUrl(objectPath, { upsert: true });
+  if (error || !data?.signedUrl) {
+    const reason = error?.message || "Supabase returned no signed URL.";
+    console.error("Could not create AI attachment upload URL", { message: reason, bucket: "neuro", objectPath });
+    fail(502, "storage", `Could not prepare private AI image upload: ${reason}`);
+  }
+  const signedUrl = data.signedUrl.startsWith("http")
+    ? data.signedUrl
+    : `${Deno.env.get("SUPABASE_URL") || "https://rgvieraaviomiovcqyyu.supabase.co"}/storage/v1${data.signedUrl}`;
+  return { signedUrl, objectPath, bucket: "neuro", name: safeName, expiresInSeconds: 120 };
+}
+
+async function verifyChatUser(input: any): Promise<string> {
+  const username = typeof input.username === "string" ? input.username.trim() : "";
+  const password = typeof input.password === "string" ? input.password : "";
+  if (!username || username.length > 128 || !password || password.length > 1024) {
+    fail(400, "invalid-argument", "A valid account and password are required for chat attachment access.");
+  }
+  if (!await readCloudAccount(username, password)) {
+    fail(401, "unauthenticated", "Could not verify the signed-in account for chat attachment access.");
+  }
+  return username;
+}
+
+async function createCollabChatUploadUrl(input: any) {
+  const username = await verifyChatUser(input);
+  const scope = typeof input.scope === "string" ? input.scope : "";
+  const fileName = typeof input.fileName === "string" ? input.fileName : "";
+  const attachmentId = typeof input.attachmentId === "string" ? input.attachmentId : "";
+  const target = typeof input.target === "string" ? input.target : "general";
+  if (!/^(general|direct)$/.test(scope) || !fileName || fileName.length > 500 ||
+      /[\\/\u0000-\u001f]/.test(fileName) || fileName === "." || fileName === ".." ||
+      !/^[a-f0-9]{16,64}$/i.test(attachmentId) || !target || target.length > 128) {
+    fail(400, "invalid-argument", "Invalid collaboration attachment details.");
+  }
+  const userHash = await folderDocumentId(username);
+  const scopeHash = scope === "general" ? "general" : await folderDocumentId(target);
+  const safeName = fileName.replace(/[^a-zA-Z0-9_.-]+/g, "_").slice(0, 120) || "attachment";
+  const objectPath = `collab_chat_attachments/${scope}/${userHash}/${scopeHash}/${attachmentId}_${safeName}`;
+  const { data, error } = await getSupabaseClient().storage.from("neuro").createSignedUploadUrl(objectPath, { upsert: false });
+  if (error || !data?.signedUrl) {
+    console.error("Could not create chat attachment upload URL", error?.message || "No signed URL", objectPath);
+    fail(502, "storage", "Could not prepare a private collaboration attachment upload.");
+  }
+  const signedUrl = data.signedUrl.startsWith("http")
+    ? data.signedUrl
+    : `${Deno.env.get("SUPABASE_URL") || "https://rgvieraaviomiovcqyyu.supabase.co"}/storage/v1${data.signedUrl}`;
+  return { signedUrl, objectPath, bucket: "neuro", name: safeName, expiresInSeconds: 120 };
+}
+
+async function createCollabChatDownloadUrls(input: any) {
+  await verifyChatUser(input);
+  const objectPaths = Array.isArray(input.objectPaths) ? [...new Set(input.objectPaths)] : [];
+  if (objectPaths.length > 100 || objectPaths.some((path) => typeof path !== "string" ||
+      !path.startsWith("collab_chat_attachments/") || path.split("/").length !== 5 ||
+      path.split("/").some((part: string) => !part || part === "." || part === ".."))) {
+    fail(400, "invalid-argument", "Invalid collaboration attachment paths.");
+  }
+  const urls: Record<string, string> = {};
+  for (const path of objectPaths) {
+    const { data, error } = await getSupabaseClient().storage.from("neuro").createSignedUrl(path, 604_800);
+    if (error || !data?.signedUrl) {
+      console.error("Could not sign collaboration attachment", error?.message || "No signed URL", path);
+      continue;
+    }
+    urls[path] = data.signedUrl;
+  }
+  return { urls, expiresInSeconds: 604_800 };
+}
+
 async function listSegmentationFolders() {
-  const cases = new Map<string, { name: string; path: string; files: any[]; hasPassword: boolean }>();
+  const cases = new Map<string, { name: string; patientName: string; path: string; files: any[]; hasPassword: boolean }>();
   let pageToken = "";
   do {
     const url = new URL(documentUrl("segmentation_artifacts"));
@@ -336,10 +444,13 @@ async function listSegmentationFolders() {
       if (!cases.has(folderPath)) {
         cases.set(folderPath, {
           name: fields.folder_name?.stringValue || folderLeaf.replace(/^segmentation_/, ""),
+          patientName: fields.patient_id?.stringValue || "",
           path: folderPath,
           files: [],
           hasPassword: false,
         });
+      } else if (!cases.get(folderPath)?.patientName && fields.patient_id?.stringValue) {
+        cases.get(folderPath)!.patientName = fields.patient_id.stringValue;
       }
     }
     pageToken = page.nextPageToken || "";
@@ -397,6 +508,9 @@ Deno.serve(async (request) => {
       case "setSegmentationFolderPassword": result = await setFolderPassword(body); break;
       case "setSegmentationFolderPasswords": result = await setPasswordsForFolders(body); break;
       case "createDesktopUploadUrl": result = await createDesktopUploadUrl(body); break;
+      case "createAIChatUploadUrl": result = await createAIChatUploadUrl(body); break;
+      case "createCollabChatUploadUrl": result = await createCollabChatUploadUrl(body); break;
+      case "createCollabChatDownloadUrls": result = await createCollabChatDownloadUrls(body); break;
       default: fail(400, "invalid-argument", "Unknown folder service action.");
     }
     return Response.json(result, { headers: corsHeaders });

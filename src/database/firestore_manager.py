@@ -86,7 +86,7 @@ def _get_dm_chat_id(uid1: str, uid2: str):
     return f"dm_{min(uid1, uid2)}_{max(uid1, uid2)}"
 
 def send_chat_message(sender_id: str, display_name: str, designation: str, text: str, msg_type: str = "text", file_path: str = "", target: str = "general",
-                      reply_to: dict = None, attachments: list = None):
+                      reply_to: dict = None, attachments: list = None, attachment_object_path: str = ""):
     db = get_db()
     if not db: return False
     try:
@@ -104,6 +104,8 @@ def send_chat_message(sender_id: str, display_name: str, designation: str, text:
             data["reply_to"] = reply_to          # {"id", "name", "text"}
         if attachments:
             data["attachments"] = attachments    # [{"name", "url"}, ...] for multi-image messages
+        if attachment_object_path:
+            data["attachment_object_path"] = attachment_object_path
         if target == "general":
             db.collection("collab_chat").add(data)
         else:

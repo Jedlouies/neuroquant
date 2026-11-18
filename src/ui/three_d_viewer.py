@@ -364,6 +364,7 @@ class ThreeDViewer(QWidget):
         self.mask_data = None
         self.spacing = (1.0, 1.0, 1.0)
         self.view_mode = "Transparent"
+        self._lobe_focus = None
         self._light = False
         self._placeholder_text = "Ctrl + I to import folder"
         self._swatches = {}
@@ -1145,6 +1146,11 @@ class ThreeDViewer(QWidget):
                         alpha = base_alpha if self.visibility.get(key, True) else 0.03
                         face_colors[is_group, :3] = rgb
                         face_colors[is_group, 3] = alpha
+            elif self.view_mode == "Lobe Focus":
+                focus_group = self.cortex_mesh["face_groups"].get(self._lobe_focus)
+                if focus_group is not None and self._lobe_focus in self.lobe_colors:
+                    face_colors[focus_group, :3] = self.lobe_colors[self._lobe_focus]
+                    face_colors[focus_group, 3] = float(np.clip(self.healthy_alpha * 1.8, 0.18, 0.75))
             elif self.view_mode == "Left Hemisphere":
                 brain_rgb = (150, 108, 88) if self._light else (226, 201, 182)
                 is_left = self.cortex_mesh["face_groups"]["left_hem"]
@@ -1218,7 +1224,7 @@ class ThreeDViewer(QWidget):
         elapsed_ms = (time.time() - t_start) * 1000.0
         self.frame_latencies.append(max(1.0, elapsed_ms))
 
-    def grab_single_isolated_snapshot(self, show_cortex: bool, show_core: bool, show_edema: bool, elev=22, azim=-65):
+    def grab_single_isolated_snapshot(self, show_cortex: bool, show_core: bool, show_edema: bool, elev=22, azim=-65, lobe_focus=None):
         was_spinning = self.spin_timer.isActive()
         self.spin_timer.stop()
         self.resume_timer.stop()
@@ -1227,6 +1233,7 @@ class ThreeDViewer(QWidget):
         old_elev = self.current_elev
         old_azim = self.current_azim
         old_mode = self.view_mode
+        old_lobe_focus = self._lobe_focus
         old_core = self.visibility["core"]
         old_edema = self.visibility["edema"]
 
@@ -1243,7 +1250,8 @@ class ThreeDViewer(QWidget):
         self.mode_panel.hide()
         self.zoom_panel.hide()
 
-        self.view_mode = "Transparent" if show_cortex else "Tumor Only"
+        self.view_mode = ("Lobe Focus" if lobe_focus else "Transparent") if show_cortex else "Tumor Only"
+        self._lobe_focus = lobe_focus
         self.visibility["core"] = show_core
         self.visibility["edema"] = show_edema
 
@@ -1256,6 +1264,7 @@ class ThreeDViewer(QWidget):
         self.current_elev = old_elev
         self.current_azim = old_azim
         self.view_mode = old_mode
+        self._lobe_focus = old_lobe_focus
         self.visibility["core"] = old_core
         self.visibility["edema"] = old_edema
         self._light = old_light

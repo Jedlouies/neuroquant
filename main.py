@@ -48,6 +48,8 @@ def resolve_logo_path():
     return None
 
 def main():
+    from process_log import log_process
+    log_process("startup", "Starting NeuroQuant development mode.")
     # Windows groups taskbar windows by this AppUserModelID. Set it before any
     # Qt windows are created so the process uses the NeuroQuant icon identity.
     if sys.platform == "win32":
@@ -60,7 +62,9 @@ def main():
     app.setQuitOnLastWindowClosed(False)
     
     # 1. Initialize the SQLite database and users table first
+    log_process("sqlite", "Initializing local database.")
     init_db()
+    log_process("sqlite", "Local database is ready.")
 
     # Set application-wide OS and taskbar icon
     icon_path = resource_path("assets", "logo", "colored.ico")
@@ -71,6 +75,7 @@ def main():
         app.setWindowIcon(QIcon(logo_path))
 
     # 2. Force encrypted authentication BEFORE the splash screen appears
+    log_process("login", "Waiting for local account sign-in.")
     login_prompt = AuthenticationDialog()
     if login_prompt.exec() != QDialog.Accepted:
         # If the user clicks exit, hits escape, or fails to login, close the app entirely.
@@ -79,6 +84,7 @@ def main():
     # FIX: Retrieve the username set by AuthenticationDialog or FirstRunSetupDialog
     authenticated_user = getattr(login_prompt, "authenticated_user", "admin") or "admin"
     cloud_password = getattr(login_prompt, "cloud_password", "")
+    log_process("login", f"Signed in as {authenticated_user!r}.")
 
     if getattr(login_prompt, "authenticated_role", "clinician") == "radiologist":
         from ui.radiologist_window import RadiologistUploadWindow

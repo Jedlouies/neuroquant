@@ -20,6 +20,8 @@ SRC_DIR = Path(__file__).resolve().parent.parent
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
+from process_log import log_process
+
 import numpy as np
 import SimpleITK as sitk
 from PySide6.QtWidgets import (
@@ -116,6 +118,11 @@ SUPABASE_PUBLISHABLE_KEY = get_setting("SUPABASE_PUBLISHABLE_KEY")
 
 
 def _call_folder_service(action, payload, timeout=30):
+    log_process("cloud-service", f"Calling folder service action: {action}.")
+    if not SUPABASE_FOLDER_SERVICE_URL:
+        raise RuntimeError("NEUROQUANT_FOLDER_SERVICE_URL is missing from the desktop .env file.")
+    if not SUPABASE_PUBLISHABLE_KEY:
+        raise RuntimeError("SUPABASE_PUBLISHABLE_KEY is missing from the desktop .env file.")
     request_body = json.dumps({"action": action, **payload}).encode("utf-8")
     request = urllib.request.Request(
         SUPABASE_FOLDER_SERVICE_URL,
@@ -128,14 +135,22 @@ def _call_folder_service(action, payload, timeout=30):
     )
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
-            return json.loads(response.read().decode("utf-8"))
+            result = json.loads(response.read().decode("utf-8"))
+            log_process("cloud-service", f"Folder service action {action} succeeded.")
+            return result
     except urllib.error.HTTPError as error:
         try:
             detail = json.loads(error.read().decode("utf-8"))
             message = detail.get("error") or detail.get("message")
         except Exception:
             message = None
-        raise RuntimeError(message or f"Folder service returned HTTP {error.code}.") from None
+        detail = message or f"Folder service returned HTTP {error.code}."
+        log_process("cloud-service", f"Action {action} failed (HTTP {error.code}): {detail}", error=True)
+        raise RuntimeError(detail) from None
+    except urllib.error.URLError as error:
+        detail = f"Could not reach folder service: {error.reason}"
+        log_process("cloud-service", f"Action {action} failed: {detail}", error=True)
+        raise RuntimeError(detail) from None
 
 class FolderLoaderWorker(QThread):
     progress = Signal(int, str)
@@ -150,6 +165,7 @@ class FolderLoaderWorker(QThread):
 
     def run(self):
         try:
+            log_process("MRI import", f"Import started: {self.folder_path}")
             self.progress.emit(15, f"Resolving NIfTI files for {os.path.basename(self.folder_path)}...")
             modality_paths = {key: path for key, path in self.assigned_paths.items() if key != "ct"}
             images = MultiParametricMRILoader.load_nifti_modalities(modality_paths)
@@ -189,6 +205,7 @@ class FolderLoaderWorker(QThread):
             else:
                 ct_volume, ct_path = None, None
             self.progress.emit(100, "MRI data loaded successfully (100%)")
+            log_process("MRI import", f"Import complete: {self.folder_path}")
 
             self.finished.emit({
                 "folder_path": self.folder_path,
@@ -203,6 +220,7 @@ class FolderLoaderWorker(QThread):
                 "ct_path": ct_path
             })
         except Exception as e:
+            log_process("MRI import", f"Import failed: {e}", error=True)
             self.error.emit(str(e))
 
     @staticmethod
@@ -435,10 +453,26 @@ class CloudGifSyncWorker(QThread):
     def run(self):
         uploaded, failures = {}, {}
         try:
-            from database.firestore_manager import get_db
+            log_process("GIF cloud sync", f"Preparing cloud sync for {len(self.local_paths)} GIF(s), segmentation {self.segmentation_id}.")
+            from database.firestore_manager import get_db, save_user_credentials_to_cloud
+            from database.db_manager import get_user_credentials
             db = get_db()
             if not self.owner_key or not self.cloud_password or not self.folder_password:
                 raise RuntimeError("A desktop account and folder password are required for mobile sharing.")
+            # Successful local sign-in is the authority for this desktop session.
+            # Refresh its salted hash in Firestore automatically before cloud
+            # operations; routine uploads must not require account recovery.
+            credentials = get_user_credentials(self.owner_key)
+            if not credentials:
+                raise RuntimeError("The signed-in desktop account could not be read from the local database.")
+            log_process("GIF cloud sync", f"Syncing signed-in account {self.owner_key!r} to Firestore before upload.")
+            if not save_user_credentials_to_cloud(
+                self.owner_key, credentials["password_hash"], credentials["salt"],
+                credentials.get("display_name") or self.owner_key,
+                credentials.get("designation") or "Attending Physician",
+            ):
+                raise RuntimeError("Could not sync the signed-in account to Firestore. Check Firestore configuration and connectivity.")
+            log_process("GIF cloud sync", "Signed-in account credentials synced to Firestore.")
             object_path = f"segmentation_gifs/{self.owner_key}/{self.folder_name}"
             password_payload = {
                 "username": self.owner_key, "accountPassword": self.cloud_password,
@@ -450,6 +484,7 @@ class CloudGifSyncWorker(QThread):
             for path in self.local_paths:
                 try:
                     name = Path(path).name
+                    log_process("GIF cloud sync", f"Requesting signed upload URL for {name}.")
                     payload = {
                         "username": self.owner_key, "password": self.cloud_password,
                         "segmentationId": str(self.segmentation_id), "folderName": self.folder_name,
@@ -464,8 +499,11 @@ class CloudGifSyncWorker(QThread):
                     try:
                         with urllib.request.urlopen(put, timeout=120) as response:
                             response.read()
+                        log_process("GIF cloud sync", f"Uploaded {name} to Supabase.")
                     except urllib.error.HTTPError as error:
-                        raise RuntimeError(f"Supabase rejected GIF upload with HTTP {error.code}.") from None
+                        body = error.read().decode("utf-8", "replace").strip()
+                        detail = body[:400] if body else error.reason or "No response details returned."
+                        raise RuntimeError(f"Supabase rejected GIF upload with HTTP {error.code}: {detail}") from None
                     storage = {"bucket": result.get("bucket", "neuro"), "object_path": result.get("objectPath"), "name": name, "size": os.path.getsize(path)}
                     uploaded[path] = storage
                     if not db:
@@ -486,10 +524,15 @@ class CloudGifSyncWorker(QThread):
                         "file_name": storage["name"],
                         "created_at": datetime.now().astimezone().isoformat()
                     }, merge=True)
+                    log_process("GIF cloud sync", f"Saved Firestore metadata for {name}.")
                 except Exception as exc:
                     failures[path] = str(exc)
+                    log_process("GIF cloud sync", f"Failed {name}: {exc}", error=True)
         except Exception as exc:
             failures.update({path: str(exc) for path in self.local_paths})
+            log_process("GIF cloud sync", f"Cloud sync setup failed: {exc}", error=True)
+        successful = sum(1 for path in uploaded if path not in failures)
+        log_process("GIF cloud sync", f"Sync finished: {successful} successful, {len(failures)} failed.")
         self.completed.emit(uploaded, failures)
 
 class SegmentationGifWorker(QThread):
@@ -508,6 +551,7 @@ class SegmentationGifWorker(QThread):
 
     def run(self):
         try:
+            log_process("GIF export", f"Generating GIFs locally in {self.output_dir}.")
             from PIL import Image
             os.makedirs(self.output_dir, exist_ok=True)
             outputs = []
@@ -569,7 +613,9 @@ class SegmentationGifWorker(QThread):
                     shutil.copy2(path, legacy_path)
                     outputs.append(legacy_path)
             self.completed.emit(self.segmentation_id, self.patient_id, self.output_dir, outputs)
+            log_process("GIF export", f"Saved {len(outputs)} GIF(s) locally in {self.output_dir}.")
         except Exception as exc:
+            log_process("GIF export", f"GIF generation failed: {exc}", error=True)
             self.failed.emit(str(exc))
 
 class MobileFolderPasswordDialog(QDialog):
@@ -814,6 +860,7 @@ class NeuroQuantMainWindow(QMainWindow):
         # AI chat window
         ai_user_id = get_user_id_by_username(ACTIVE_USER) or ACTIVE_USER
         self.diagnostic_ai = BrainDiagnosticWorkstation(user_id=ai_user_id)
+        self.diagnostic_ai.set_cloud_credentials(self.authenticated_user, self._cloud_password)
         self.diagnostic_ai.set_api_key(self.ai_api_key)
         self.diagnostic_ai.configuration_requested.connect(self.open_ai_key_settings)
         self.diagnostic_ai.database_attachment_requested.connect(self.attach_database_data_to_ai)
@@ -854,6 +901,9 @@ class NeuroQuantMainWindow(QMainWindow):
         act_3d = QAction("Export 3D Render Views Only (PNG)", self)
         act_3d.triggered.connect(self.export_3d_images_only)
         export_submenu.addAction(act_3d)
+        act_lobe_gif = QAction("Export Lobe Rotation (GIF)", self)
+        act_lobe_gif.triggered.connect(self.export_lobe_rotation_gif)
+        export_submenu.addAction(act_lobe_gif)
         act_slices = QAction("Export 2D Orthogonal Slices Only (PNG)", self)
         act_slices.triggered.connect(self.export_slices_only)
         export_submenu.addAction(act_slices)
@@ -956,12 +1006,6 @@ class NeuroQuantMainWindow(QMainWindow):
         settings_menu.addAction(act_profile)
         settings_menu.addSeparator()
 
-        act_mobile_folder_password = QAction("Mobile Folder Password…", self)
-        act_mobile_folder_password.setToolTip("Set or change the password used to open synced folders in the mobile app")
-        act_mobile_folder_password.triggered.connect(self.open_mobile_folder_password)
-        settings_menu.addAction(act_mobile_folder_password)
-        settings_menu.addSeparator()
-        
         auth_submenu = settings_menu.addMenu("Authentication")
         act_change_user = QAction("Change Username...", self)
         act_change_user.triggered.connect(self.action_change_username)
@@ -1504,6 +1548,7 @@ class NeuroQuantMainWindow(QMainWindow):
             )
             return
         self._cloud_password = cloud_password
+        self.diagnostic_ai.set_cloud_credentials(self.authenticated_user, self._cloud_password)
         dialog = MobileFolderPasswordDialog(self.authenticated_user, cloud_password, folders, self)
         if dialog.exec() == QDialog.DialogCode.Accepted:
             if folders:
@@ -1546,9 +1591,11 @@ class NeuroQuantMainWindow(QMainWindow):
         dlg = ChangeUsernameDialog(ACTIVE_USER, self)
         if dlg.exec() == QDialog.Accepted:
             ACTIVE_USER = dlg.new_username
+            self.authenticated_user = ACTIVE_USER
             self.chat_panel.user_id = ACTIVE_USER
             self.chat_panel.load_profile_from_cloud()
             self.diagnostic_ai.set_user_id(get_user_id_by_username(ACTIVE_USER) or ACTIVE_USER)
+            self.diagnostic_ai.set_cloud_credentials(self.authenticated_user, self._cloud_password)
 
     def _make_slice_grid(self):
         grid = QGridLayout()
@@ -1768,6 +1815,7 @@ class NeuroQuantMainWindow(QMainWindow):
             self._assign_folder_for_import(dialog.imported_folder)
 
     def enqueue_import(self, folder_path: str, assigned_paths=None, detect_ct_dicom=True):
+        log_process("MRI import", f"Queued case for import: {folder_path}")
         queued = (folder_path, dict(assigned_paths or {}), bool(detect_ct_dicom))
         if not any(item[0] == folder_path for item in self.import_queue):
             self.import_queue.append(queued)
@@ -1816,13 +1864,16 @@ class NeuroQuantMainWindow(QMainWindow):
             return
 
         try:
+            log_process("patient record", f"Saving patient record for {self.current_subject_name}.")
             self.patient_info.update(intake.get_data())
             self.current_subject_name = self.patient_info["patient_name"]
             self.patient_info["radiologist"] = self.attending_physician
             self.patient_info["patient_gender"] = self.patient_info.get("patient_gender") or "Unknown"
             save_patient_record(self.patient_info, preserve_existing=True)
             self.patient_metadata_confirmed = True
+            log_process("patient record", f"Patient record saved for {self.current_subject_name}.")
         except Exception as exc:
+            log_process("patient record", f"Could not save patient record: {exc}", error=True)
             QMessageBox.critical(self, "Patient record could not be saved", str(exc))
             self.is_processing_queue = False
             return
@@ -1843,13 +1894,16 @@ class NeuroQuantMainWindow(QMainWindow):
         self.loader_worker.finished.connect(self.on_load_finished)
         self.loader_worker.error.connect(self.on_load_error)
         self.loader_worker.start()
+        log_process("MRI import", f"Started import worker for {next_folder}.")
 
     def on_load_progress(self, percent: int, message: str):
+        log_process("MRI import", f"{percent}% — {message}")
         self.progress_bar.setValue(percent)
         self.lbl_progress_pct.setText(f"{percent}%")
         self.lbl_progress_status.setText(message)
 
     def on_load_finished(self, data: dict):
+        log_process("MRI import", f"Loaded case successfully: {data.get('subject_name', 'unknown case')}.")
         self.progress_group.setVisible(False)
         self.btn_run.setText("SCAN")
         self._set_run_available(True)
@@ -1874,12 +1928,14 @@ class NeuroQuantMainWindow(QMainWindow):
         self.statusBar().showMessage("Scan imported. Select SCAN when you are ready to segment.", 10000)
 
     def on_load_error(self, message: str):
+        log_process("MRI import", f"Import failed: {message}", error=True)
         self.progress_group.setVisible(False)
         self._set_run_available(False)
         QMessageBox.critical(self, "Import Error", f"Failed to load scan folder: {message}")
         self._process_next_in_queue()
 
     def run_segmentation(self):
+        log_process("segmentation", f"Starting segmentation for {self.current_subject_name}.")
         self.progress_group.setVisible(True)
         self.progress_group.setTitle("Running Segmentation")
         self.progress_bar.setValue(0)
@@ -1898,11 +1954,13 @@ class NeuroQuantMainWindow(QMainWindow):
         self.worker.start()
 
     def on_segmentation_progress(self, percent: int, message: str):
+        log_process("segmentation", f"{percent}% — {message}")
         self.progress_bar.setValue(percent)
         self.lbl_progress_pct.setText(f"{percent}%")
         self.lbl_progress_status.setText(message)
 
     def on_segmentation_finished(self, result: dict):
+        log_process("segmentation", f"Segmentation completed for {self.current_subject_name}.")
         self.progress_group.setVisible(False)
         self.btn_run.setText("SEGMENTATION COMPLETED")
         self._set_run_available(False)
@@ -1955,44 +2013,20 @@ class NeuroQuantMainWindow(QMainWindow):
         if not segmentation_id:
             return
         self.statusBar().showMessage(f"GIFs saved locally: {_output_dir}", 6000)
+        log_process("GIF export", f"Registering {len(paths)} GIF(s) saved to {_output_dir}.")
         registered = []
         for path in paths:
             try:
                 save_segmentation_artifact(segmentation_id, f"MRI GIF ({Path(path).stem.title()})", path)
                 registered.append(path)
             except Exception as exc:
+                log_process("GIF export", f"Could not register {path}: {exc}", error=True)
                 print(f"Unable to register GIF artifact: {exc}")
         if registered:
-            owner_key = getattr(self, "authenticated_user", ACTIVE_USER)
-            folder_password = read_mobile_folder_password(owner_key)
-            if not folder_password:
-                self.statusBar().showMessage(
-                    "GIFs are saved locally. Set a mobile folder password in Settings > Mobile Folder Password before cloud sync.",
-                    12000,
-                )
-                return
-            if not getattr(self, "_cloud_password", ""):
-                account_password, accepted = QInputDialog.getText(
-                    self, "Verify Cloud Account", "Enter your cloud account password to protect this folder:", QLineEdit.Password
-                )
-                if not accepted or not account_password:
-                    self.statusBar().showMessage("GIFs are saved locally; cloud sharing needs account verification.", 10000)
-                    return
-                self._cloud_password = account_password
-            worker = CloudGifSyncWorker(
-                segmentation_id, patient_id, registered,
-                owner_key=owner_key,
-                cloud_password=getattr(self, "_cloud_password", ""),
-                folder_password=folder_password,
-            )
-            worker.completed.connect(lambda uploaded, failures, seg_id=segmentation_id:
-                                     self.on_cloud_gif_sync_finished(seg_id, uploaded, failures))
-            self.cloud_sync_workers.append(worker)
-            worker.finished.connect(lambda current=worker: self.cloud_sync_workers.remove(current)
-                                    if current in self.cloud_sync_workers else None)
-            worker.start()
+            log_process("GIF cloud sync", "Mobile sharing is hidden; generated GIFs remain saved locally.")
 
     def on_cloud_gif_sync_finished(self, segmentation_id, uploaded, failures):
+        log_process("GIF cloud sync", f"Segmentation {segmentation_id}: {len(uploaded)} upload(s) returned, {len(failures)} failure(s).", error=bool(failures))
         for path, storage in uploaded.items():
             object_path = f"{storage['bucket']}/{storage['object_path']}"
             state = "pending" if path in failures else "synced"
@@ -2032,6 +2066,7 @@ class NeuroQuantMainWindow(QMainWindow):
                     self.statusBar().showMessage(f"GIF folder: {local_dir} ({exc})", 12000)
 
     def on_segmentation_error(self, message: str):
+        log_process("segmentation", f"Segmentation failed: {message}", error=True)
         self.progress_group.setVisible(False)
         self.btn_run.setText("SCAN")
         self._set_run_available(True)
@@ -2353,6 +2388,49 @@ class NeuroQuantMainWindow(QMainWindow):
         except Exception as e:
             QMessageBox.critical(self, "Export Error", f"Could not save 3D images: {str(e)}")
 
+    def export_lobe_rotation_gif(self):
+        if self.full_mask is None:
+            QMessageBox.warning(self, "Export", "Please run segmentation first before exporting.")
+            return
+        selected_lobe = self._choose_report_lobe()
+        if selected_lobe is None:
+            return
+        default_filename = f"{self.patient_info['patient_name']}_{selected_lobe.title()}_Lobe_Tumor_Rotation.gif"
+        path, _ = QFileDialog.getSaveFileName(
+            self, "Save Lobe Rotation GIF", default_filename, "GIF Files (*.gif)"
+        )
+        if not path:
+            return
+        if not path.lower().endswith(".gif"):
+            path += ".gif"
+        try:
+            from PIL import Image
+
+            with tempfile.TemporaryDirectory() as temp_dir:
+                frame_paths = []
+                for index, azimuth in enumerate(range(0, 360, 15)):
+                    frame = self.three_d_viewer.grab_single_isolated_snapshot(
+                        show_cortex=True, show_core=True, show_edema=True,
+                        elev=22, azim=azimuth, lobe_focus=selected_lobe,
+                    )
+                    frame_path = os.path.join(temp_dir, f"frame_{index:02d}.png")
+                    if not frame.save(frame_path, "PNG"):
+                        raise RuntimeError("Could not render a rotation frame.")
+                    frame_paths.append(frame_path)
+
+                frames = [Image.open(frame_path).convert("RGB") for frame_path in frame_paths]
+                frames[0].save(
+                    path, save_all=True, append_images=frames[1:], duration=200,
+                    loop=0, optimize=True, disposal=2,
+                )
+                for frame in frames:
+                    frame.close()
+
+            QMessageBox.information(self, "Export Successful", f"Saved the {selected_lobe} lobe rotation GIF to:\n{path}")
+            self.log_report_export("Lobe Rotation (GIF)", path)
+        except Exception as e:
+            QMessageBox.critical(self, "Export Error", f"Could not create lobe rotation GIF: {str(e)}")
+
     def export_slices_only(self):
         if self.full_mask is None:
             QMessageBox.warning(self, "Export", "Please run segmentation first before exporting.")
@@ -2551,13 +2629,19 @@ class NeuroQuantMainWindow(QMainWindow):
                         ["Total tumor", f"{self.current_metrics.get('total_tumor_volume_mm3', 0.0):,.0f}", "Combined active core and peritumoral edema"],
                         ["Active core", f"{self.current_metrics.get('active_tumor_core_mm3', 0.0):,.0f}", "Segmented active tumor component"],
                         ["Peritumoral edema", f"{self.current_metrics.get('peritumoral_edema_mm3', 0.0):,.0f}", "Segmented surrounding edema component"],
-                        ["Frontal lobe", f"{self.current_metrics.get('frontal_mm3', 0.0):,.0f}", "Regional anatomical volume"],
-                        ["Parietal lobe", f"{self.current_metrics.get('parietal_mm3', 0.0):,.0f}", "Regional anatomical volume"],
-                        ["Occipital lobe", f"{self.current_metrics.get('occipital_mm3', 0.0):,.0f}", "Regional anatomical volume"],
-                        ["Temporal lobe", f"{self.current_metrics.get('temporal_mm3', 0.0):,.0f}", "Regional anatomical volume"],
-                        ["Cerebellum", f"{self.current_metrics.get('cerebellum_mm3', 0.0):,.0f}", "Regional anatomical volume"],
-                        ["Spinal cord / brainstem", f"{self.current_metrics.get('spinal_cord_mm3', 0.0):,.0f}", "Regional anatomical volume"]
                     ]
+                    lobe_labels = {
+                        "frontal": "Frontal lobe",
+                        "parietal": "Parietal lobe",
+                        "temporal": "Temporal lobe",
+                        "occipital": "Occipital lobe",
+                    }
+                    for lobe in ("frontal", "parietal", "temporal", "occipital"):
+                        table_data.append([
+                            lobe_labels[lobe],
+                            f"{self.current_metrics.get(f'{lobe}_mm3', 0.0):,.0f}",
+                            "Regional anatomical volume",
+                        ])
 
                     tab = ax_table.table(cellText=table_data, colWidths=[0.31, 0.20, 0.49],
                                          bbox=[0, 0, 1, 1], cellLoc='left')
@@ -2670,6 +2754,33 @@ class NeuroQuantMainWindow(QMainWindow):
 
         except Exception as e:
             QMessageBox.critical(self, "Export Error", f"Failed to generate multi-page PDF report: {str(e)}")
+
+    def _choose_report_lobe(self):
+        """Ask which cerebral lobe to highlight in the rotating GIF export."""
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Choose Lobe to Highlight")
+        dialog.setMinimumWidth(340)
+        layout = QVBoxLayout(dialog)
+        layout.addWidget(QLabel("Choose one lobe to show with the tumor. Other lobes will be transparent:"))
+        lobe_choice = QComboBox(dialog)
+        for key, label in (
+            ("frontal", "Frontal lobe"),
+            ("parietal", "Parietal lobe"),
+            ("temporal", "Temporal lobe"),
+            ("occipital", "Occipital lobe"),
+        ):
+            lobe_choice.addItem(label, key)
+        layout.addWidget(lobe_choice)
+
+        buttons = QDialogButtonBox(
+            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
+        )
+        buttons.accepted.connect(dialog.accept)
+        buttons.rejected.connect(dialog.reject)
+        layout.addWidget(buttons)
+        if dialog.exec() != QDialog.DialogCode.Accepted:
+            return None
+        return lobe_choice.currentData()
 
 
 if __name__ == "__main__":

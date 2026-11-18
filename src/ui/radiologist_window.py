@@ -3,6 +3,8 @@ import os
 import re
 from pathlib import Path
 
+from process_log import log_process
+
 from PySide6.QtCore import QEvent, QPoint, QThread, Signal, Qt, QTimer, QSize
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
@@ -42,11 +44,15 @@ class _RadiologistTask(QThread):
             username = self.session["username"]
             display_name = self.session.get("display_name") or username
             if self.operation == "refresh":
+                log_process("radiologist cloud", f"Loading uploaded scan list for {username}.")
                 self.completed.emit(list_user_scans(display_name, legacy_username=username))
             elif self.operation == "delete":
+                log_process("radiologist cloud", f"Deleting {len(self.paths)} selected scan(s).")
                 delete_user_scans(self.paths)
+                log_process("radiologist cloud", "Selected cloud scans deleted.")
                 self.completed.emit(None)
             elif self.operation == "upload":
+                log_process("radiologist cloud", f"Uploading {len(self.paths)} scan file(s) to Supabase.")
                 root = f"{user_scan_root(display_name)}/{_safe_segment(self.folder_label)}"
                 for index, path in enumerate(self.paths, start=1):
                     self.progress.emit(-1, f"Uploading {index} of {len(self.paths)} · {Path(path).name}")
@@ -56,9 +62,11 @@ class _RadiologistTask(QThread):
                         relative = Path(path).name
                     object_key = f"{root}/{relative}"
                     upload_scan(path, object_key)
+                    log_process("radiologist cloud", f"Uploaded {index}/{len(self.paths)}: {Path(path).name}")
                     self.progress.emit(round(index * 100 / len(self.paths)), f"Uploaded {index} of {len(self.paths)} · {Path(path).name}")
                 self.completed.emit(len(self.paths))
         except Exception as exc:
+            log_process("radiologist cloud", f"{self.operation} failed: {exc}", error=True)
             self.failed.emit(str(exc))
 
 
@@ -372,6 +380,7 @@ class RadiologistUploadWindow(QMainWindow):
         self.activity_bar.setRange(0, 0)
         self.activity_bar.setValue(0)
         self.status.setText(f"Uploading {len(paths)} scan file(s) to { _safe_segment(label) }…")
+        log_process("radiologist cloud", f"Upload requested: {len(paths)} file(s), cloud folder {_safe_segment(label)}.")
         self._task = _RadiologistTask("upload", self.session, paths, label, base_dir)
         self._task.progress.connect(self._upload_progress)
         self._task.completed.connect(self._upload_complete)
@@ -399,6 +408,7 @@ class RadiologistUploadWindow(QMainWindow):
         self._task.start()
 
     def _upload_progress(self, percent, message):
+        log_process("radiologist cloud", f"{message}" if percent < 0 else f"{percent}% — {message}")
         if percent < 0:
             self.activity_bar.setRange(0, 0)
             self.status.setText(message)

@@ -437,20 +437,20 @@ class AIChatCloudSyncWorker(QThread):
     """Uploads image attachments privately and mirrors a chat snapshot to Firestore."""
     sync_finished = Signal(str)
 
-    def __init__(self, user_id, session, parent=None):
+    def __init__(self, user_id, username, password, session, parent=None):
         super().__init__(parent)
         self.user_id = str(user_id)
+        self.username = str(username or "")
+        self.password = str(password or "")
         self.session = copy.deepcopy(session)
         self.attachment_refs = {}
         self.error_message = ""
         self.firestore_saved = False
-        self.bucket_missing = ""
 
     def run(self):
         try:
-            from database.supabase_storage import upload_clinical_artifact, BucketMissingError
+            from database.supabase_storage import upload_ai_chat_attachment
             from database.firestore_manager import save_ai_chat_session_to_cloud
-            skip_uploads = False
 
             for message in self.session.get("messages", []):
                 refs = message.setdefault("cloud_attachments", {})
@@ -461,12 +461,10 @@ class AIChatCloudSyncWorker(QThread):
                     if refs.get(path, {}).get("object_path"):
                         self.attachment_refs[path] = refs[path]
                         continue
-                    if skip_uploads:
-                        continue
                     try:
-                        remote = upload_clinical_artifact(
-                            path, folder=f"ai_{self.user_id}_{self.session['id']}"
-                        )
+                        if not self.username or not self.password:
+                            raise RuntimeError("Sign in again before backing up AI image attachments to the private cloud bucket.")
+                        remote = upload_ai_chat_attachment(path, self.username, self.password, str(self.session["id"]))
                         refs[path] = {
                             "bucket": remote["bucket"],
                             "object_path": remote["object_path"],
@@ -474,10 +472,6 @@ class AIChatCloudSyncWorker(QThread):
                             "mime": remote["mime"],
                         }
                         self.attachment_refs[path] = refs[path]
-                    except BucketMissingError as error:
-                        # Setup problem: stop trying other files; the chat text still syncs below.
-                        self.bucket_missing = error.bucket
-                        skip_uploads = True
                     except Exception as error:
                         refs[path] = {"sync_error": str(error)[:500]}
                         self.attachment_refs[path] = refs[path]
@@ -708,6 +702,8 @@ class BrainDiagnosticWorkstation(QWidget):
     def __init__(self, parent=None, user_id="admin"):
         super().__init__(parent)
         self.user_id = user_id or "admin"
+        self.cloud_username = ""
+        self.cloud_password = ""
         self._drag_pos = QPoint()
         self._staged_scans = []
         self._msg_map = {}
@@ -715,7 +711,6 @@ class BrainDiagnosticWorkstation(QWidget):
         self._cloud_workers = {}
         self._cloud_pending = {}
         self._cloud_sync_warned = set()
-        self._bucket_warned = False
         self._welcome_heading = None
         self._welcome_animation = None
         self.api_key = ""
@@ -1123,6 +1118,10 @@ class BrainDiagnosticWorkstation(QWidget):
         self._refresh_recent_list()
         self.start_new_chat()
 
+    def set_cloud_credentials(self, username: str, password: str):
+        self.cloud_username = str(username or "")
+        self.cloud_password = str(password or "")
+
     def _save_chat(self, chat, sync_cloud=True):
         if not chat or not chat["messages"]:
             self._update_prompt_suggestions("")
@@ -1149,7 +1148,9 @@ class BrainDiagnosticWorkstation(QWidget):
         if worker is not None and worker.isRunning():
             return
         session = self._cloud_pending.pop(chat_id)
-        worker = AIChatCloudSyncWorker(self.user_id, session, self)
+        worker = AIChatCloudSyncWorker(
+            self.user_id, self.cloud_username, self.cloud_password, session, self
+        )
         worker.sync_finished.connect(self._on_cloud_sync_finished)
         self._cloud_workers[chat_id] = worker
         worker.start()
@@ -1180,17 +1181,7 @@ class BrainDiagnosticWorkstation(QWidget):
                 except Exception:
                     pass
         error = worker.error_message
-        missing_bucket = worker.bucket_missing
         worker.deleteLater()
-        if missing_bucket and not self._bucket_warned and self.isVisible():
-            self._bucket_warned = True
-            QMessageBox.information(
-                self, "Image backup unavailable",
-                "Your chat was saved on this computer and in the cloud.\n\n"
-                f"Its images could not be backed up because the private Supabase bucket "
-                f"\"{missing_bucket}\" does not exist yet. Create it (keep it private) in "
-                "Supabase \u2192 Storage and the images will upload automatically on the next save."
-            )
         if error and chat_id not in self._cloud_sync_warned and self.isVisible():
             self._cloud_sync_warned.add(chat_id)
             QMessageBox.warning(
@@ -1257,9 +1248,13 @@ class BrainDiagnosticWorkstation(QWidget):
         self.recents_list.blockSignals(False)
 
     def _render_current_chat(self):
-        if self._welcome_animation is not None:
-            self._welcome_animation.stop()
-            self._welcome_animation = None
+        animation, self._welcome_animation = self._welcome_animation, None
+        if animation is not None:
+            try:
+                animation.stop()
+            except RuntimeError:
+                # Qt may already have deleted the animation with its heading.
+                pass
         self._welcome_heading = None
         self._clear_chat_view()
         chat = self._find_session(self.current_chat_id)

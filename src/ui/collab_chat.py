@@ -745,26 +745,45 @@ class ChatInfoSidebar(QFrame):
 
 
 class UploadWorker(QThread):
-    uploaded = Signal(str, str, str, str)
+    uploaded = Signal(str, str, str, str, str)
     failed = Signal(str, str)
 
-    def __init__(self, path, kind, target, parent=None):
+    def __init__(self, path, kind, target, username, password, parent=None):
         super().__init__(parent)
         self.path, self.kind, self.target = path, kind, target
+        self.username, self.password = username, password
 
     def run(self):
         try:
             folder = "general" if self.target == "general" else "direct"
-            info = upload_attachment(self.path, folder)
-            self.uploaded.emit(self.kind, info["name"], info["url"], self.target)
+            info = upload_collab_chat_attachment(self.path, self.username, self.password, self.target)
+            self.uploaded.emit(self.kind, info["name"], info["url"], self.target, info["object_path"])
         except Exception as e:
             self.failed.emit(os.path.basename(self.path), str(e))
 
 class ChatSignalBridge(QObject):
     messages_updated = Signal(list)
     users_updated = Signal(list)
+    attachment_urls_updated = Signal(object)
     download_finished = Signal(str)
     download_failed = Signal(str)
+
+
+class ChatAttachmentRefreshWorker(QThread):
+    completed_urls = Signal(object)
+
+    def __init__(self, username, password, object_paths, parent=None):
+        super().__init__(parent)
+        self.username, self.password = username, password
+        self.object_paths = list(object_paths)
+
+    def run(self):
+        try:
+            from database.supabase_storage import refresh_collab_chat_attachment_urls
+            urls = refresh_collab_chat_attachment_urls(self.username, self.password, self.object_paths)
+        except Exception:
+            urls = {}
+        self.completed_urls.emit(urls)
 
 class OnlineUserWidget(QWidget):
     def __init__(self, display_name, designation, is_online, is_self):
@@ -2106,13 +2125,20 @@ class CollabChatPanel(QWidget):
 
     def _on_upload_done(self, kind, name, url, target):
         try:
-            send_chat_message(self.user_id, self.display_name, self.designation, name, kind, url, target, reply_to=self._active_reply)
+            sent = send_chat_message(self.user_id, self.display_name, self.designation, name, kind, url, target, reply_to=self._active_reply)
             self.cancel_reply()
         except TypeError:
-            send_chat_message(self.user_id, self.display_name, self.designation, name, kind, url, target)
+            sent = send_chat_message(self.user_id, self.display_name, self.designation, name, kind, url, target)
             self.cancel_reply()
         except Exception as e:
             QMessageBox.warning(self, "Error", f"Uploaded, but the message could not be sent: {e}")
+            return
+        if not sent:
+            QMessageBox.warning(
+                self, "Message not sent",
+                "The attachment uploaded, but Firestore did not save the chat message. "
+                "Check the Firebase connection and Firestore permissions, then try again."
+            )
 
     def _on_upload_failed(self, name, error):
         QMessageBox.warning(self, "Upload failed", f"Could not send {name}:\n{error}")
@@ -2165,11 +2191,14 @@ class CollabChatPanel(QWidget):
             if text:
                 if self.is_online and self.db:
                     try:
-                        send_chat_message(self.user_id, self.display_name, self.designation, text, "text", "", self.current_target, reply_to=self._active_reply)
+                        sent = send_chat_message(self.user_id, self.display_name, self.designation, text, "text", "", self.current_target, reply_to=self._active_reply)
                     except TypeError:
-                        send_chat_message(self.user_id, self.display_name, self.designation, text, "text", "", self.current_target)
-                self.input_field.clear()
-                self.cancel_reply()
+                        sent = send_chat_message(self.user_id, self.display_name, self.designation, text, "text", "", self.current_target)
+                    if sent:
+                        self.input_field.clear()
+                        self.cancel_reply()
+                    else:
+                        QMessageBox.warning(self, "Message not sent", "Firestore did not save the chat message. Check the Firebase connection and permissions, then try again.")
             return
 
         if not text:
@@ -2181,11 +2210,14 @@ class CollabChatPanel(QWidget):
 
         if self.is_online and self.db:
             try:
-                send_chat_message(self.user_id, self.display_name, self.designation, text, "text", "", self.current_target, reply_to=self._active_reply)
+                sent = send_chat_message(self.user_id, self.display_name, self.designation, text, "text", "", self.current_target, reply_to=self._active_reply)
             except TypeError:
-                send_chat_message(self.user_id, self.display_name, self.designation, text, "text", "", self.current_target)
-            self.input_field.clear()
-            self.cancel_reply()
+                sent = send_chat_message(self.user_id, self.display_name, self.designation, text, "text", "", self.current_target)
+            if sent:
+                self.input_field.clear()
+                self.cancel_reply()
+            else:
+                QMessageBox.warning(self, "Message not sent", "Firestore did not save the chat message. Check the Firebase connection and permissions, then try again.")
         else:
             if not self.db:
                 QMessageBox.warning(self, "Cloud Service Disconnected", 

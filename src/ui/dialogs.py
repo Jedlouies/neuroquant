@@ -4,6 +4,8 @@ import json
 import tempfile
 import html
 import webbrowser
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 import numpy as np
@@ -63,7 +65,32 @@ def open_documentation_site():
             "The NeuroQuant documentation page is missing from this installation. Rebuild or reinstall the application.",
         )
         return False
-    return webbrowser.open(page.resolve().as_uri())
+    page_url = page.resolve().as_uri()
+    if os.name == "nt":
+        program_roots = [
+            os.environ.get("PROGRAMFILES", ""),
+            os.environ.get("PROGRAMFILES(X86)", ""),
+            os.environ.get("LOCALAPPDATA", ""),
+        ]
+        browser_candidates = [
+            shutil.which("msedge"), shutil.which("chrome"), shutil.which("firefox"),
+            *(os.path.join(root, relative) for root in program_roots if root for relative in (
+                r"Microsoft\Edge\Application\msedge.exe",
+                r"Google\Chrome\Application\chrome.exe",
+                r"Mozilla Firefox\firefox.exe",
+            )),
+        ]
+        browser = next((candidate for candidate in browser_candidates if candidate and Path(candidate).is_file()), None)
+        if not browser:
+            QMessageBox.warning(None, "Browser unavailable", "Could not find Microsoft Edge, Google Chrome, or Firefox to open the NeuroQuant guide.")
+            return False
+        try:
+            subprocess.Popen([browser, page_url], close_fds=True)
+            return True
+        except OSError as error:
+            QMessageBox.warning(None, "Could not open guide", f"The browser could not open the NeuroQuant guide.\n\n{error}")
+            return False
+    return webbrowser.open(page_url)
 
 
 def svg_icon(path, size=QSize(16, 16)):
@@ -330,6 +357,7 @@ class FirstRunSetupDialog(QDialog):
         self.role = role
         self.default_username = "admin"
         self.new_username = ""
+        self.new_password = ""
         self._setup_busy = False
         self._cloud_worker = None
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint | Qt.WindowType.Dialog)
@@ -479,6 +507,7 @@ class FirstRunSetupDialog(QDialog):
             creds = get_user_credentials(new_usr)
 
         self.new_username = new_usr
+        self.new_password = pwd
         if not creds:
             QMessageBox.critical(self, "Setup Error", "The local account was updated, but its credentials could not be loaded.")
             return
@@ -749,6 +778,7 @@ class AuthenticationDialog(QDialog):
                 setup_wizard = FirstRunSetupDialog(parent=self)
                 if setup_wizard.exec() == QDialog.Accepted:
                     self.authenticated_user = setup_wizard.new_username
+                    self.cloud_password = setup_wizard.new_password
                     self.accept()
                 return
 
@@ -3139,7 +3169,7 @@ class UserManualDialog(QDialog):
             "• Inspect Axial, Coronal, Sagittal, and Modality channels with interactive crosshair synchronization.<br>"
             "• Rotate the 3D anatomical cortex model and toggle individual lobe layers in the legend panel.<br><br>"
             "<b>4. Exporting Reports:</b><br>"
-            "• Access <b>File > Export</b> to generate comprehensive 7-page clinical PDF dossiers, raw metrics CSVs, or ZIP bundles."
+            "• Access <b>File > Export</b> to generate clinical PDF dossiers, metrics CSVs, ZIP bundles, 3D views, and a rotating GIF focused on a selected lobe with the tumor."
         )
 
         lbl_manual = QLabel(manual_text)

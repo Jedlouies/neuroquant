@@ -1,0 +1,516 @@
+DEEP-LEARNING-BASED GLIOMA BRAIN TUMOR SEGMENTATION
+AND VOLUMETRIC QUANTIFICATION USING MULTI-PARAMETRIC
+
+                        MRI: A DECISION SUPPORT SYSTEM
+
+                      SUBMITTED TO THE FACULTY OF THE
+              DEPARTMENT OF INFORMATION TECHNOLOGY
+   COLLEGE OF INFORMATION TECHNOLOGY AND COMPUTING
+
+                                                 BY
+
+                                 JED LOUIES O CAMARA
+                                      LOVELY M ALABE
+
+                             KRISTEZA MARIE M BALODO
+                                 KIRK JHON B ESTONILO
+                                       KURT L GLEMA
+
+                         IN PARTIAL FULFILLMENT OF THE
+                                REQUIREMENTS FOR THE
+                                          DEGREE OF
+
+       BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY
+
+                                       DECEMBER 2026
+                               TABLE OF CONTENTS        PAGE
+
+TITLE PAGE                                                 i
+APPROVAL PAGE                                              ii
+ACKNOWLEDGMENT                                            iii
+TABLE OF CONTENTS                                         iv
+LIST OF TABLES                                             ix
+LIST OF FIGURES                                            xi
+LIST OF APPENDICES                                        xiii
+ABSTRACT                                                  xiv
+ACRONYMS AND ABBREVIATIONS                                xv
+INTRODUCTION                                               1
+                                                           1
+   1.1 Background of the Study                             2
+       1.1.1 Gliomas and the Need for Tumor Assessment     3
+       1.1.2 MRI in Glioma Assessment                      3
+       1.1.3 Deep Learning for Tumor Segmentation          4
+       1.1.4 The Proposed NeuroQuant System                7
+       1.1.5 Rationale for the Study                       7
+                                                           8
+   1.2 Statement of the Problem
+   1.3. Objectives of the Study
+   1.4 Scope and Limitations of the Study
+   1.5 Significance of the Study
+REVIEW OF RELATED LITERATURE                             PAGE
+   2.1 Introduction
+   2.2 Review of Related Literature and Studies            10
+       2.2.1 BraTS Tumor Regions on Multimodal MRI.        11
+       2.2.2 U-Net Architecture for Image Segmentation     12
+       2.2.3 Tumor Volume Measurement from MRI Masks       13
+       2.2.4 3D Dense U-Net Glioma Segmentation3D          13
+       2.2.5 FusionNet Multimodal Segmentation             14
+       2.2.6 Longitudinal Glioma Volume Assessment         15
+   2.3 Synthesis of the Reviewed Literature and Studies    15
+                                                           16
+METHODOLOGY
+   3.1                                                     16
+                                                           16
+RESULTS AND DISCUSSION                                     16
+   4.1                                                     17
+       4.1.1                                               17
+                                                           18
+SUMMARY AND CONCLUSION                                     18
+RECOMMENDATIONS                                            19
+                                                           19
+   6.1
+   6.2                                                     19
+   6.3
+   6.4                                                     19
+REFERENCES
+APPENDICES
+                 LIST OF TABLES
+
+TABLE                                                  PAGE
+
+1.1    Specific Neurologist Needs                      17
+
+1.2    Specific Objectives                             21
+
+1.3    Beneficiaries of the Study and Their Potential  27
+
+       Benefits
+          LIST OF FIGURES
+
+FIGURE                        PAGE
+    1.1                          4
+
+          LIST OF APPENDICES
+
+APPENDIX                      PAGE
+
+       A                        117
+       B                        119
+       C                        121
+      D                         125
+       E                        128
+       F                        130
+      G                         131
+      H                         134
+
+       I                        135
+J  136
+
+K  138
+
+L  139
+
+M  140
+
+N  141
+
+O  144
+3D       ACRONYMS AND ABBREVIATIONS
+AI
+BraTS          Three Dimensional
+Dice           Artificial Intelligence
+FLAIR          Brain Tumor Segmentation
+MRI            Dice Similarity Coefficient
+nnU-Net        Fluid-Attenuated Inversion Recovery
+SRS            Magnetic Resonance Imaging
+T1             No-New-Net
+T1ce           Software Requirements Specification
+T2             T1-Weighted MRI Sequence
+U-Net          Contrast-Enhanced T1-Weighted MRI Sequence
+               T2-weighted MRI sequence
+               U-shaped network architecture
+                                             Chapter 1
+                                       INTRODUCTION
+
+1.1 Background of the Study
+
+         Brain tumors present important challenges in diagnosis and treatment,
+and gliomas are among the most common types of primary malignant brain
+tumors. Assessing their extent requires careful examination of medical images,
+particularly MRI scans. Recent advances in deep learning have made
+automated image segmentation a promising way to support this assessment.
+This section discusses gliomas and their assessment, the role of MRI, deep-
+learning approaches to segmentation, and the proposed NeuroQuant system.
+
+1.1.1 Gliomas and the Need for Tumor Assessment
+
+         Gliomas are a major group of primary brain tumors. The International
+Agency for Research on Cancer (IARC) reports that more than 250,000 primary
+malignant brain tumors are diagnosed worldwide each year, and that gliomas
+account for approximately 77% of these cases. Gliomas can differ in appearance
+and extent, making assessment of both the tumor and surrounding affected
+tissue important.
+
+1.1.2 MRI in Glioma Assessment
+
+         Magnetic resonance imaging (MRI) helps clinicians examine gliomas
+using different image contrasts. T1, contrast-enhanced T1 (T1Gd or T1ce), T2,
+and fluid-attenuated inversion recovery (FLAIR) sequences provide
+complementary information about brain anatomy, contrast enhancement, and
+abnormal tissue around a tumor. Reviewing these sequences together can help
+delineate tumor subregions and estimate their extent.
+
+         Manual delineation of these regions can be time-consuming and may
+vary between readers. Research using the Brain Tumor Segmentation (BraTS)
+benchmark addresses these challenges and evaluates automated segmentation
+methods using multiparametric MRI data.
+
+                                   C.M. Recto Avenue, Lapasan, Cagayan de Oro City 9000 Philippines
+                           Tel Nos. +63 (88) 856 1738; Telefax +63 (88) 856 4696 | http://www.ustp.edu.ph
+1.1.3 Deep Learning for Tumor Segmentation
+
+         Deep-learning methods can assist with tumor segmentation. A three-
+dimensional U-Net, for example, processes volumetric image data and
+produces a spatial segmentation mask. When the mask is combined with the
+image's voxel spacing, the volumes of its segmented regions can be estimated.
+
+         These measurements may help clinicians review tumor extent and
+compare imaging over time. They should be interpreted alongside the original
+images and clinical context and should not replace professional judgment.
+
+1.1.4 The Proposed NeuroQuant System
+
+         This study proposes NeuroQuant, a decision-support system for glioma
+segmentation and volumetric quantification using multiparametric MRI. The
+current system loads T1, T1ce, T2, and FLAIR volumes, runs segmentation
+locally using an ONNX model, displays the resulting mask in 2D and 3D views,
+and calculates active tumor core, peritumoral edema, and total tumor volume
+using voxel spacing.
+
+         NeuroQuant is intended to support qualified clinicians in reviewing
+imaging findings. Its automated segmentation and measurements are outputs
+for professional review; the system does not establish a diagnosis or replace
+clinical judgment.
+
+1.1.5 Rationale for the Study
+
+         The project addresses the time and variability involved in manually
+delineating tumor regions by bringing MRI import, automated segmentation,
+visualization, and volumetric measurement into one desktop workflow.
+Running segmentation locally allows that analysis step to be performed
+without requiring a network connection, provided the workstation and model
+are available.
+
+         Scope clarification: NeuroQuant also has cloud features for radiologist
+scan uploads and sharing prepared preview images. Since your focus here is
+local segmentation and quantification, mention those features only if they are
+part of the study's stated scope.
+
+                                      C.M. Recto Avenue, Lapasan, Cagayan de Oro City 9000 Philippines
+                              Tel Nos. +63 (88) 856 1738; Telefax +63 (88) 856 4696 | http://www.ustp.edu.ph
+1.2 Statement of the Problem
+
+         Glioma tumor sub-regions can be difficult and time-consuming to
+delineate and measure consistently across multi-parametric MRI scans. This
+study addresses the need for a tool that can assist with automated segmentation
+and volumetric measurement while allowing clinicians to review the results.
+
+Table 1.1 Specific neurologist needs identified during requirements elicitation,
+alongside the evidence supporting each problem.
+
+  NO               SPECIFIC PROBLEM                 EVIDENCE FROM
+1     The neurologist needs an offline option               DATA
+2     for opening and reviewing MRI scans
+      alongside the hospital's online viewer.    Requirements
+3                                                Elicitation Summary
+      The neurologist needs to inspect scans in  4.2, Neurologist:
+4     multiple planes and understand tumor       requested an offline
+      location in relation to brain anatomy.     option for MRI review.
+                                                 Requirements
+      The neurologist needs clear tumor          Elicitation Summary,
+      location and volume measurements to        4.2, Neurologist:
+      support clinical review.                   identified multiplanar
+                                                 inspection and
+      The neurologist needs AI outputs to        anatomical context as
+      assist diagnostic reasoning while leaving  needs.
+      clinical judgment with the clinician.      Requirements
+                                                 Elicitation Summary,
+                                                 4.2, Neurologist:
+                                                 requested location and
+                                                 volume measurements.
+                                                 4.3, FR-12 notes that the
+                                                 neurologist asked
+                                                 whether tumor size
+                                                 could be measured;
+                                                 support is for
+                                                 measurement generally,
+                                                 not each individual
+                                                 segmentation label.
+                                                 Requirements
+                                                 Elicitation Summary,
+                                                 4.2, Neurologist:
+                                                 reported using AI for
+                                                 diagnostic reasoning
+                                                 and said outputs
+
+             C.M. Recto Avenue, Lapasan, Cagayan de Oro City 9000 Philippines
+      Tel Nos. +63 (88) 856 1738; Telefax +63 (88) 856 4696 | http://www.ustp.edu.ph
+                                                       should support, not
+
+                                                       replace, clinical
+
+                                                       judgment.
+
+                                                       Requirements
+
+                                                       Elicitation Summary,
+
+                                                       4.2 and 4.4:
+
+   The neurologist has concerns about                  confidentiality and
+
+5  confidentiality and data handling,                  backup concerns were
+   especially when connected or cloud                  reported; the synthesis
+
+   features are used.                                  calls for clear disclosure
+
+                                                       and institutional
+
+                                                       procedures for
+
+                                                       connected services.
+
+1.3 Objectives of the Study
+
+         To design, develop, test, and evaluate NeuroQuant, a desktop clinical
+decision-support system that locally imports and displays multi-parametric
+brain MRI studies, generates glioma segmentation overlays, calculates tumor
+core and edema volumes, and prepares reports for clinician review.
+
+1.3.1 Specific Objectives
+
+         To achieve the overall aim of this study, the following specific objectives
+will guide the development and evaluation of the proposed system. They focus
+on analyzing the requirements, designing and implementing the system, and
+assessing its performance in brain MRI analysis, glioma segmentation, and the
+estimation of tumor core and edema volumes. The objectives are presented
+below:
+
+Table 1.2 Specific objectives across the SDLC phases.
+
+    SDLC PHASE                             OBJECTIVE
+Analysis        To analyze the MRI review needs reported by the
+Design          neurologist and imaging requirements verified by the
+                radiologic technologist and document the approved
+                system scope and requirements in the SRS before
+                design begins.
+                To design NeuroQuant's architecture, data flow,
+                interface, and database for supported scan import,
+                sequence confirmation, multiplanar viewing,
+
+          C.M. Recto Avenue, Lapasan, Cagayan de Oro City 9000 Philippines
+   Tel Nos. +63 (88) 856 1738; Telefax +63 (88) 856 4696 | http://www.ustp.edu.ph
+Development  segmentation overlays, volume reporting, and local
+Testing      record storage.
+Evaluation   To implement the approved desktop workflow for
+             importing supported MRI files, confirming T1,
+             T1ce/T1Gd, T2, and FLAIR sequences, viewing
+             scans, running local segmentation, calculating
+             volumes, storing completed results, and exporting
+             reports.
+             To test the supported import, sequence validation,
+             multiplanar display, local segmentation workflow,
+             volume calculation, record storage, and report export
+             using defined test cases.
+             To evaluate NeuroQuant's scan-review workflow,
+             measurements, and report with intended clinical
+             users after implementation and testing.
+
+1.4 Scope and Limitations of the Study
+
+         This study covers the design, development, testing, and evaluation of
+NeuroQuant, a desktop clinical decision-support system for reviewing brain
+MRI studies and assisting with glioma segmentation and volume measurement.
+
+         The system imports supported image files, including readable DICOM
+series, NIfTI, NRRD, MetaImage, and Analyze files. For segmentation, the user
+must confirm one volume for each required MRI sequence: T1, contrast-
+enhanced T1 (T1ce/T1Gd), T2, and FLAIR. The system provides axial, coronal,
+and sagittal views, displays model-generated segmentation overlays, calculates
+active tumor core, peritumoral edema, and total tumor volumes using voxel
+spacing, stores records locally, and can export a summary report.
+
+         MRI import, segmentation, visualization, and local record management
+are designed to work without internet access. Optional AI, collaboration, cloud
+storage or synchronization, and account-recovery functions require an internet
+connection when used.
+
+         The study is limited to the functions and supported inputs defined in the
+SRS. Segmentation requires all four specified MRI sequences to be readable and
+correctly assigned. CT may be imported for viewing, but it is not used by the
+MRI segmentation model and does not support CT-based tumor segmentation.
+
+         NeuroQuant does not provide a clinical diagnosis, replace clinician
+judgment, or integrate with a hospital PACS. It is designed for an individual
+workstation and does not provide a shared client-server patient database. The
+
+                                      C.M. Recto Avenue, Lapasan, Cagayan de Oro City 9000 Philippines
+                              Tel Nos. +63 (88) 856 1738; Telefax +63 (88) 856 4696 | http://www.ustp.edu.ph
+model has three output labels--background, active tumor core, and
+peritumoral edema--and does not identify healthy brain tissue as a separate
+label.
+
+The system is limited to glioma brain tumors. It is not designed or evaluated to
+segment or quantify other brain tumors, such as meningiomas or brain
+metastases.
+
+1.5 Significance of the Study
+
+         The study is significant because its findings and prototype may support
+clinical MRI review, inform institutional workflow planning, and provide a
+reference for future researchers and system developers.
+
+Table 1.3 Beneficiaries of the Study and Their Potential Benefits
+
+ BENEFICIARIES                           HOW THEY BENEFIT
+                    Can review MRI scans in multiple planes, inspect
+Neurologists and    segmentation overlays, and view calculated tumor core
+neurosurgeons       and edema volumes to support their clinical review.
+                    The measurements remain subject to their
+Radiology           interpretation.
+department          May benefit from a structured MRI import and
+personnel           sequence-confirmation workflow. The radiologic
+                    technologist in the requirements study was a
+Healthcare          requirements verifier, not an intended application user.
+institution         May use the prototype to explore a workstation-based
+                    MRI review workflow with local scan processing and
+Future researchers  record storage. Any use with real patient information
+and system          would require institutional approval and procedures.
+developers          May use the study's requirements, design,
+                    implementation, and evaluation as a reference when
+                    developing or studying similar MRI review and
+                    segmentation systems.
+
+       C.M. Recto Avenue, Lapasan, Cagayan de Oro City 9000 Philippines
+Tel Nos. +63 (88) 856 1738; Telefax +63 (88) 856 4696 | http://www.ustp.edu.ph
+                                             Chapter 2
+              REVIEW OF RELATED LITERATURE AND STUDIES
+
+2.1 Introduction
+
+         This chapter reviews literature and studies related to glioma MRI,
+automated tumor segmentation, volumetric measurement, and medical image
+analysis software. It summarizes relevant systems, compares their features with
+the proposed NeuroQuant system, and identifies how the study's scope
+responds to the needs documented in the requirements interviews. The chapter
+concludes with the study's input-process-output conceptual framework.
+
+2.2 Review of Related Literature and Studies
+
+         This section reviews literature and studies on glioma MRI, tumor
+segmentation, and volumetric measurement relevant to the proposed
+NeuroQuant system.
+
+2.2.1 BraTS Tumor Regions on Multimodal MRI
+
+         Glioma MRI assessment uses multiple image sequences because
+different contrasts show different aspects of a tumor and surrounding tissue.
+The BraTS benchmark literature describes using multi-parametric MRI and
+tumor sub-region labels to develop and compare automated glioma
+segmentation methods. Its commonly discussed regions include the whole
+tumor, tumor core, and enhancing tumor. NeuroQuant's SRS defines a project-
+specific, simpler label set: background, active tumor core, and peritumoral
+edema. These label sets should not be treated as identical. (Menze et al., 2015;
+Baid et al., 2021)
+
+2.2.2 U-Net Architecture for Image Segmentation
+
+         Deep-learning segmentation methods can automate the delineation of
+image regions. The U-Net architecture was developed for biomedical image
+segmentation, while U-Net extends this approach by automatically configuring
+parts of the segmentation pipeline, such as preprocessing and network settings,
+for a task. These studies support the technical basis for exploring a 3D U-Net
+model, but results reported by other teams do not establish NeuroQuant's
+accuracy. (Ronneberger et al., 2015; Isensee et al., 2021)
+
+                                      C.M. Recto Avenue, Lapasan, Cagayan de Oro City 9000 Philippines
+                              Tel Nos. +63 (88) 856 1738; Telefax +63 (88) 856 4696 | http://www.ustp.edu.ph
+2.2.3 Tumor Volume Measurement from MRI Masks
+
+         Segmentation masks can also support volumetric measurement.
+Research on automated brain-tumor segmentation has evaluated predicted
+tumor volumes against manually delineated volumes, showing why
+segmentation and measurement need to be assessed separately. For
+NeuroQuant, volumes are calculated from predicted voxel labels and the MRI's
+physical voxel spacing. The project's evaluation dataset, metrics, and
+acceptance thresholds still need to be defined in the SRS. (Huang et al., 2021)
+
+2.2.4 3D Dense U-Net Glioma Segmentation
+
+         A study using 3D Dense U-Nets trained on multimodal MRI evaluated
+whole-tumor, tumor-core, and enhancing-tumor segmentation across BraTS
+and an independent clinical dataset. It supports studying 3D deep-learning
+segmentation across multiple sources, while its BraTS region definitions do not
+directly match NeuroQuant's labels. (Zhao et al., 2020)
+
+2.2.5 3D FusionNet Multimodal Segmentation
+
+         3D FusionNet study combined multiple MRI modalities and assessed
+predicted tumor regions with overlap and boundary-distance measures. Its
+results highlight the value of evaluating both how much predicted and
+reference regions overlap and how far their boundaries differ. The study's
+reported performance is specific to its dataset and label scheme. (Segmentation
+of glioblastomas via 3D FusionNet)
+
+2.2.6 Longitudinal Glioma Volume Assessment
+
+         Research on post-treatment diffuse glioma used a 3D nnU-Net with T1,
+T2, post-contrast T1, and FLAIR images to segment tissue regions and assess
+longitudinal changes. This is relevant to multimodal segmentation and follow-
+up measurement, though its post-treatment tissue labels differ from
+NeuroQuant's project-specific classes. (Longitudinal Assessment of
+Posttreatment Diffuse Glioma Tissue Volumes)
+
+2.3 Synthesis of the Reviewed Literature and Studies
+
+         The reviewed literature shows that glioma segmentation commonly uses
+multiple MRI sequences because each sequence provides different information
+
+                                      C.M. Recto Avenue, Lapasan, Cagayan de Oro City 9000 Philippines
+                              Tel Nos. +63 (88) 856 1738; Telefax +63 (88) 856 4696 | http://www.ustp.edu.ph
+about the tumor and surrounding tissue. BraTS provides a widely used
+benchmark for developing and comparing segmentation methods, with
+reference labels for regions such as whole tumor, tumor core, and enhancing
+tumor. These benchmark labels provide useful context, but they are not
+identical to NeuroQuant's simpler project-specific classes: background, active
+tumor core, and peritumoral edema.
+
+         Research on U-Net, 3D U-Net, nnU-Net, and related models supports
+the technical feasibility of using deep learning to segment brain tumors in
+multimodal MRI. Studies also show that segmentation performance can vary
+by region and dataset. Smaller or less clearly defined tumor regions can be more
+challenging to segment. Results from those studies provide methodological
+context for NeuroQuant's proposed 3D U-Net; they do not establish the
+accuracy or clinical performance of NeuroQuant's model.
+
+         The literature also connects segmentation with volumetric assessment.
+Predicted labels can be converted into physical volumes using voxel counts and
+MRI voxel spacing, and published studies have used automated segmentation
+to support tumor-burden measurement and longitudinal assessment. This
+makes segmentation quality and measurement quality related but distinct
+evaluation concerns: a volume calculation can be implemented correctly while
+still reflecting errors in the predicted mask.
+
+         Taken together, the reviewed work provides a basis for NeuroQuant's
+approach: process multimodal MRI, predict the project's three labels, and
+derive volumes from the resulting masks and image spacing. NeuroQuant will
+need its own evaluation using a defined dataset, reference annotations mapped
+to its label set, suitable segmentation and volume metrics, and acceptance
+thresholds. These details remain to be specified in the SRS before claims about
+NeuroQuant's performance can be made.
+
+                                      C.M. Recto Avenue, Lapasan, Cagayan de Oro City 9000 Philippines
+                              Tel Nos. +63 (88) 856 1738; Telefax +63 (88) 856 4696 | http://www.ustp.edu.ph
+       C.M. Recto Avenue, Lapasan, Cagayan de Oro City 9000 Philippines
+Tel Nos. +63 (88) 856 1738; Telefax +63 (88) 856 4696 | http://www.ustp.edu.ph
+
